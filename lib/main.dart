@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:personal_pjt/actions/auth/auth_action.dart';
 import 'package:personal_pjt/data/api/api_routes.dart';
 import 'package:flutter/material.dart';
