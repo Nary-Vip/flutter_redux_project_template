@@ -19,7 +19,7 @@ class _AppLoaderState extends State<AppLoader> {
           Positioned(
               left: 0.0,
               right: 0.0,
-              bottom: MediaQuery.of(context).size.height * 0.12,
+              bottom: MediaQuery.of(context).size.height * 0.5,
               child: Container(
                 height: 70.0,
                 child: Text('qkjbdc'),

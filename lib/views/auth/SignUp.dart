@@ -3,87 +3,54 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
-import 'package:personal_pjt/views/auth/SignUp.dart';
-import 'package:personal_pjt/views/home/home_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:personal_pjt/views/auth/login_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _mobileNoController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late SharedPreferences pref;
+  final TextEditingController _cPasswordController = TextEditingController();
 
+  var phone;
+  var email;
+  var password;
+  var msg;
+  var passVisible = false, cPassVisible = false;
+
+  final instance = FirebaseAuth.instance;
   final CollectionReference _users =
       FirebaseFirestore.instance.collection("users");
 
-  @override
-  void initState() {
-    super.initState();
-    chkForSavedUser();
-  }
-
-  chkForSavedUser() async {
-    pref = await _prefs;
-    if (pref.getStringList("user") != null) {
-      final List<String>? user = pref.getStringList("user");
-      _emailController.text = user![0];
-      _passwordController.text = user[1];
-    }
-  }
-
-  var email;
-  var password;
-  var phone;
-  var msg = "";
-  bool passVisible = false;
-  final instance = FirebaseAuth.instance;
-
-  void loginUserWithEmail(context) async {
+  void createUserInFirebase() async {
     try {
-      await instance.signInWithEmailAndPassword(
+      await instance.createUserWithEmailAndPassword(
           email: email, password: password);
       setState(() {
-        msg = "Login Success";
+        msg = "Account created";
       });
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) {
-        return HomePage();
-      }));
-      if (_chkBox) {
-        pref.setStringList("user", [email, password]);
-      } else {
-        pref.setStringList("user", ["", ""]);
-      }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
+      if (e.code == "weak-password") {
+        print("The password is very weak");
         setState(() {
-          msg = 'No user found for that email.';
+          msg = "The password is very weak";
         });
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
+      } else if (e.code == "email-already-in-use") {
         setState(() {
-          msg = 'Wrong password provided for that user.';
+          msg = "Email already in use";
         });
-        print('Wrong password provided for that user.');
+        print("Account already exists");
       }
     } catch (e) {
       print(e);
     }
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Hi User"),
-        content: Text("$msg"),
-      ),
-    );
   }
 
   var _chkBox = false;
@@ -106,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            "Welcome Back Developer",
+                            "Hello Developer",
                             style: GoogleFonts.inter(
                                 fontSize: 17, color: Colors.black),
                           ),
@@ -114,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                             height: 8,
                           ),
                           Text(
-                            "Log In",
+                            "Sign UP",
                             style: GoogleFonts.inter(
                                 fontSize: 23,
                                 color: Colors.black,
@@ -150,6 +117,32 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(
                             height: 20,
                           ),
+                          TextFormField(
+                            controller: _mobileNoController,
+                            decoration: InputDecoration(
+                              labelText: "Mobile",
+                              hintText: "Enter your Mobile Number",
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 255, 189, 103),
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(color: Colors.green)),
+                            ),
+                            validator: (val) {
+                              if (val!.length == 0) {
+                                return "Mobile cannot be empty";
+                              } else if (val.length != 10) {
+                                return "Enter a valid phone number";
+                              } else {
+                                return null;
+                              }
+                            },
+                            keyboardType: TextInputType.phone,
+                            style: TextStyle(fontFamily: "Poopins"),
+                          ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -160,8 +153,12 @@ class _LoginPageState extends State<LoginPage> {
                               labelText: "Password",
                               suffixIcon: IconButton(
                                   icon: (passVisible)
-                                      ? Icon(Icons.visibility)
-                                      : Icon(Icons.visibility_off),
+                                      ? Icon(
+                                          Icons.visibility,
+                                        )
+                                      : Icon(
+                                          Icons.visibility_off,
+                                        ),
                                   onPressed: () {
                                     setState(() {
                                       passVisible = !passVisible;
@@ -192,8 +189,53 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(
                             height: 20,
                           ),
+                          TextFormField(
+                            controller: _cPasswordController,
+                            obscureText: cPassVisible ? false : true,
+                            decoration: InputDecoration(
+                              labelText: "Confirm Password",
+                              suffixIcon: IconButton(
+                                  icon: (cPassVisible)
+                                      ? Icon(
+                                          Icons.visibility,
+                                        )
+                                      : Icon(
+                                          Icons.visibility_off,
+                                        ),
+                                  onPressed: () {
+                                    setState(() {
+                                      cPassVisible = !cPassVisible;
+                                    });
+                                  }),
+                              hintText: "Enter your Password again",
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 255, 189, 103),
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(color: Colors.green)),
+                            ),
+                            validator: (val) {
+                              if (val!.length == 0) {
+                                return "Enter a valid password";
+                              } else if (val.length < 8) {
+                                return "Password length must be greater than 8";
+                              } else if (val != _passwordController.text) {
+                                return "Password mismatch";
+                              } else {
+                                return null;
+                              }
+                            },
+                            keyboardType: TextInputType.visiblePassword,
+                            style: TextStyle(fontFamily: "Poopins"),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Row(
@@ -206,19 +248,19 @@ class _LoginPageState extends State<LoginPage> {
                                           _chkBox = newVal!;
                                         });
                                       }),
-                                  Text("Remember me"),
+                                  Text("Agree to RQ's T/C"),
                                 ],
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) {
-                                      return const SignUp();
+                                      return const LoginPage();
                                     },
                                   ));
                                 },
                                 child: Text(
-                                  "Dont have an account?",
+                                  "Have an account?",
                                   maxLines: 2,
                                   style: TextStyle(color: Colors.blue),
                                 ),
@@ -230,15 +272,35 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           ElevatedButton(
                             onPressed: () {
+                              phone = _mobileNoController.text;
                               email = _emailController.text;
                               password = _passwordController.text;
+                              model.loginWithPassword(email, phone, password);
                               final form = _formKey.currentState;
                               if (form!.validate()) {
-                                form.save();
-                                //_formKey.currentState?.validate
+                                if (_chkBox == true) {
+                                  form.save();
+                                  //_formKey.currentState?.validate
 
-                                loginUserWithEmail(context);
-                                form.reset();
+                                  createUserInFirebase();
+                                  _users.doc().set({
+                                    "email": email,
+                                    "phone": phone,
+                                    "password": password
+                                  });
+                                  form.reset();
+                                } else {
+                                  setState(() {
+                                    msg = "Please agree to RQ's T/C";
+                                  });
+                                }
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Hello Dev"),
+                                    content: Text("$msg"),
+                                  ),
+                                );
                               }
                             },
                             style: ElevatedButton.styleFrom(

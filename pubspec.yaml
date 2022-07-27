@@ -34,7 +34,6 @@ dependencies:
   rxdart: ^0.27.3
   built_value: ^8.1.4
   built_collection: ^5.1.1
-  shared_preferences: ^2.0.12
   permission_handler: ^8.3.0
   http: ^0.13.4
   uri: ^1.0.0
@@ -47,6 +46,12 @@ dependencies:
   loading_gifs: ^0.3.0
   fluttertoast: ^8.0.8
   flutter_custom_dialog: ^1.2.0
+  #My Dependencies
+  google_fonts: ^3.0.1
+  firebase_core: ^1.20.0
+  cloud_firestore: ^3.4.1
+  firebase_auth: ^3.5.1
+  shared_preferences: ^2.0.15
 
 
 dev_dependencies:

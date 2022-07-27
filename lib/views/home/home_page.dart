@@ -20,9 +20,12 @@ class HomePage extends StatelessWidget {
           ),
           body: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('${authModel.currentUser!.userId?.toString()}'),
-                Text('${authModel.currentUser!.email?.toString()}')
+                //Text('${authModel.currentUser!.userId?.toString()}'),
+                //Text('${authModel.currentUser!.email?.toString()}'),
+                //Text("Hello"),
               ],
             ),
           ),
