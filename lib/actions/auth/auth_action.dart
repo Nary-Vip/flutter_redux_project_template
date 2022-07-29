@@ -1,18 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:personal_pjt/models/app_notes.dart';
 import 'package:personal_pjt/models/app_user.dart';
 
 class CheckForUserInPrefs {}
 
 //********************************* login-in ***********************************//
 class LoginWithPassword {
-  LoginWithPassword({this.email, this.mobile, this.password});
+  LoginWithPassword(
+      {required this.email,
+      required this.password,
+      required this.onSuccess,
+      required this.onError});
 
-  final String? email;
-  final String? mobile;
-  final String? password;
+  final String email;
+  //final String? mobile;
+  final String password;
+  final ValueChanged<String> onSuccess;
+  final ValueChanged<String> onError;
 }
 
 class SaveUser {
-  SaveUser({this.userDetails});
+  SaveUser({required this.userDetails});
 
   final AppUser? userDetails;
 }
@@ -34,6 +42,13 @@ class SetLoader {
   final bool isLoading;
 }
 
+//**************************** manage login state *************************//
+class SetIsLoginError {
+  SetIsLoginError({required this.isLoginError});
+
+  final String? isLoginError;
+}
+
 //**************************** manage initializer status *************************//
 class SetInitializer {
   SetInitializer(this.isInitializing);
@@ -53,4 +68,29 @@ class SetSuccessMessage {
   SetSuccessMessage({required this.message});
 
   final String message;
+}
+
+//**************************** manage adding notes *************************//
+
+class SetAddNotesAction {
+  SetAddNotesAction({required this.email, required this.note});
+
+  final String email;
+  final Map<String, dynamic> note;
+}
+
+//**************************** manage fetching notes *************************//
+
+class GetFetchingNotes {}
+
+class SaveDataToGlobalData {
+  final AppNotes usrNotes;
+
+  SaveDataToGlobalData(this.usrNotes);
+}
+
+class loggedInMail {
+  final String email;
+
+  loggedInMail(this.email);
 }

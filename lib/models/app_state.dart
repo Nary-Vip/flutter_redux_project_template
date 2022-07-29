@@ -3,6 +3,8 @@ import 'package:built_value/built_value.dart';
 import 'package:flutter/material.dart' hide Builder;
 import 'package:personal_pjt/models/models.dart';
 
+import 'app_notes.dart';
+
 part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
@@ -25,6 +27,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   AppUser? get currentUser;
 
+  AppNotes? get userNotesList;
+
+  //String? get currentUser;
+
   bool get isInitializing;
 
   bool get isLoading;
@@ -36,6 +42,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String? get successMessage;
 
   Pagination? get pagination;
+
+  String? get isLoginError;
 
   BuiltList<Notifications>? get notificationList;
 }

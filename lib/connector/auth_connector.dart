@@ -1,4 +1,5 @@
 import 'package:personal_pjt/actions/actions.dart';
+import 'package:personal_pjt/models/app_notes.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:flutter/material.dart' hide Builder;
@@ -7,8 +8,10 @@ import 'package:redux/redux.dart';
 
 part 'auth_connector.g.dart';
 
-typedef LoginWithPasswordAction = void Function(
-    String email, String mobile, String password);
+typedef LoginWithPasswordAction = void Function(String email, String password,
+    ValueChanged<String> onSuccess, ValueChanged<String> onError);
+typedef AppNotesAction = void Function(String email, Map<String, dynamic> note);
+typedef LoggedInMailConnector = void Function(String email);
 typedef LogOutAction = void Function();
 
 abstract class AuthViewModel
@@ -24,9 +27,22 @@ abstract class AuthViewModel
       return b
         ..isInitializing = store.state.isInitializing
         ..currentUser = store.state.currentUser?.toBuilder()
-        ..loginWithPassword = (String email, String mobile, String password) {
+        ..isLoading = store.state.isLoading
+        ..loggedInmail = (String email) {
+          store.dispatch(loggedInMail(email));
+        }
+        ..getUserNotes = store.state.userNotesList?.toBuilder()
+        ..isLoginError = store.state.isLoginError
+        ..loginWithPassword = (String email, String password,
+            ValueChanged<String> onSuccess, ValueChanged<String> onError) {
           store.dispatch(LoginWithPassword(
-              email: email, mobile: mobile, password: password));
+              email: email,
+              password: password,
+              onSuccess: onSuccess,
+              onError: onError));
+        }
+        ..mailAndNotes = (String email, Map<String, dynamic> note) {
+          store.dispatch(SetAddNotesAction(email: email, note: note));
         }
         ..logOut = () {
           store.dispatch(LogOutUser());
@@ -36,11 +52,21 @@ abstract class AuthViewModel
 
   LoginWithPasswordAction get loginWithPassword;
 
+  AppNotes get getUserNotes;
+
+  LoggedInMailConnector get loggedInmail;
+
   LogOutAction get logOut;
 
   AppUser? get currentUser;
 
+  AppNotesAction get mailAndNotes;
+
   bool get isInitializing;
+
+  bool get isLoading;
+
+  String? get isLoginError;
 }
 
 class AuthConnector extends StatelessWidget {

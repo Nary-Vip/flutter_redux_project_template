@@ -20,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late SharedPreferences pref;
-
   final CollectionReference _users =
       FirebaseFirestore.instance.collection("users");
 
@@ -42,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   var email;
   var password;
   var phone;
-  var msg = "";
+  String? msg;
   bool passVisible = false;
   final instance = FirebaseAuth.instance;
 
@@ -50,6 +49,8 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await instance.signInWithEmailAndPassword(
           email: email, password: password);
+      //_users.get({email: email});
+
       setState(() {
         msg = "Login Success";
       });
@@ -91,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return AuthConnector(
       builder: (BuildContext context, AuthViewModel model) {
+        print(model.isLoginError);
         return Scaffold(
           body: Center(
             child: SingleChildScrollView(
@@ -228,28 +230,57 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(
                             height: 35,
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              email = _emailController.text;
-                              password = _passwordController.text;
-                              final form = _formKey.currentState;
-                              if (form!.validate()) {
-                                form.save();
-                                //_formKey.currentState?.validate
+                          model.isLoading
+                              ? CircularProgressIndicator()
+                              : ElevatedButton(
+                                  onPressed: () async {
+                                    var result;
+                                    email = _emailController.text;
+                                    password = _passwordController.text;
+                                    final form = _formKey.currentState;
+                                    if (form!.validate()) {
+                                      form.save();
+                                      //_formKey.currentState?.validate
+                                      //loginUserWithEmail(context);
+                                      model.loginWithPassword(email, password, (
+                                        String successMsg,
+                                      ) {
+                                        model.loggedInmail(email);
+                                        _emailController.text = "";
+                                        _passwordController.text = "";
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                              return HomePage();
+                                            },
+                                          ),
+                                        );
+                                        print(successMsg);
+                                      }, (String errorMsg) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            title: Text("Hi User"),
+                                            content: Text("$msg"),
+                                          ),
+                                        );
+                                        print(errorMsg);
+                                      });
 
-                                loginUserWithEmail(context);
-                                form.reset();
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                              primary: Color.fromARGB(255, 255, 189, 103),
-                            ),
-                            child: Text(
-                              "SIGN IN",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
+                                      result = model.isLoginError;
+                                      print("Edittt $result");
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    padding:
+                                        EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                    primary: Color.fromARGB(255, 255, 189, 103),
+                                  ),
+                                  child: Text(
+                                    "SIGN IN",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
                         ],
                       ),
                     ),

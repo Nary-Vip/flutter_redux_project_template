@@ -18,12 +18,30 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _mobileNoController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _cPasswordController = TextEditingController();
+  final TextEditingController _fnController = TextEditingController();
+  final TextEditingController _lnController = TextEditingController();
 
   var phone;
   var email;
   var password;
   var msg;
   var passVisible = false, cPassVisible = false;
+  var list = ["Male", "Female"];
+  String? dropDownValue;
+
+  List<DropdownMenuItem<String>> get dropDowdnItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(
+        child: Text("Male"),
+        value: "Male",
+      ),
+      DropdownMenuItem(
+        child: Text("Female"),
+        value: "Female",
+      )
+    ];
+    return menuItems;
+  }
 
   final instance = FirebaseAuth.instance;
   final CollectionReference _users =
@@ -67,16 +85,20 @@ class _SignUpState extends State<SignUp> {
                   key: _formKey,
                   child: Center(
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
+                      width: MediaQuery.of(context).size.width * 0.9,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.1,
+                          ),
                           Text(
                             "Hello Developer",
                             style: GoogleFonts.inter(
                                 fontSize: 17, color: Colors.black),
                           ),
+
                           const SizedBox(
                             height: 8,
                           ),
@@ -87,9 +109,64 @@ class _SignUpState extends State<SignUp> {
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           ),
-                          const SizedBox(
-                            height: 35,
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.1,
                           ),
+
+                          //Name
+                          TextFormField(
+                            controller: _fnController,
+                            decoration: InputDecoration(
+                              labelText: "First Name",
+                              hintText: "Enter your First Name",
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 255, 189, 103),
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(color: Colors.green)),
+                            ),
+                            validator: (val) {
+                              if (val!.length == 0) {
+                                return "Name cannot be empty";
+                              } else {
+                                return null;
+                              }
+                            },
+                            style: TextStyle(fontFamily: "Poopins"),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            controller: _lnController,
+                            decoration: InputDecoration(
+                              labelText: "Last Name",
+                              hintText: "Enter your Last Name",
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 255, 189, 103),
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(color: Colors.green)),
+                            ),
+                            validator: (val) {
+                              if (val!.length == 0) {
+                                return "Name cannot be empty";
+                              } else {
+                                return null;
+                              }
+                            },
+                            style: TextStyle(fontFamily: "Poopins"),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+
                           TextFormField(
                             controller: _emailController,
                             decoration: InputDecoration(
@@ -142,6 +219,21 @@ class _SignUpState extends State<SignUp> {
                             },
                             keyboardType: TextInputType.phone,
                             style: TextStyle(fontFamily: "Poopins"),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          //Row(chilrendr
+                          DropdownButton(
+                            value: dropDownValue,
+                            style: TextStyle(
+                                color: Colors.blueAccent, fontSize: 15),
+                            onChanged: (String? value) {
+                              setState(() {
+                                dropDownValue = value;
+                              });
+                            },
+                            items: dropDowdnItems,
                           ),
                           const SizedBox(
                             height: 20,
@@ -275,7 +367,7 @@ class _SignUpState extends State<SignUp> {
                               phone = _mobileNoController.text;
                               email = _emailController.text;
                               password = _passwordController.text;
-                              model.loginWithPassword(email, phone, password);
+                              //model.loginWithPassword(email, password);
                               final form = _formKey.currentState;
                               if (form!.validate()) {
                                 if (_chkBox == true) {

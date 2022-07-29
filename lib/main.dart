@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
       store: store,
       child: MaterialApp(
         navigatorKey: store.state.navigator,
-        title: 'MyApp',
+        title: 'NaryNotes',
         theme: themeData,
         home: InitPage(),
         debugShowCheckedModeBanner: false,

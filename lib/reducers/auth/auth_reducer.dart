@@ -5,10 +5,13 @@ import 'package:redux/redux.dart';
 Reducer<AppState> authReducer = combineReducers(<Reducer<AppState>>[
   TypedReducer<AppState, SaveUser>(setUser),
   TypedReducer<AppState, SetLoader>(setLoader),
+  TypedReducer<AppState, SetIsLoginError>(setIsLoginError),
   TypedReducer<AppState, SetInitializer>(setInitializer),
   TypedReducer<AppState, LogOutUser>(logOutUser),
   TypedReducer<AppState, SetErrorMessage>(setErrorMessage),
-  TypedReducer<AppState, SetSuccessMessage>(setSuccessMessage)
+  TypedReducer<AppState, SetSuccessMessage>(setSuccessMessage),
+  TypedReducer<AppState, SaveDataToGlobalData>(fetchUserNotes),
+  //TypedReducer<AppState, SetCurrentUser>(setCurrentUser)
 ]);
 
 AppState setLoader(AppState state, SetLoader action) {
@@ -16,6 +19,18 @@ AppState setLoader(AppState state, SetLoader action) {
   b..isLoading = action.isLoading;
   return b.build();
 }
+
+AppState setIsLoginError(AppState state, SetIsLoginError action) {
+  final AppStateBuilder b = state.toBuilder();
+  b..isLoginError = action.isLoginError;
+  return b.build();
+}
+
+// AppState setCurrentUser(AppState state, SetCurrentUser action) {
+//   final AppStateBuilder b = state.toBuilder();
+//   b..currentUser = action.currentUser;
+//   return b.build();
+// }
 
 AppState setInitializer(AppState state, SetInitializer action) {
   final AppStateBuilder b = state.toBuilder();
@@ -60,5 +75,13 @@ void updateSuccessMessageState(AppState state) {
 AppState setUser(AppState state, SaveUser action) {
   final AppStateBuilder b = state.toBuilder();
   b..currentUser = action.userDetails!.toBuilder();
+  return b.build();
+}
+
+AppState fetchUserNotes(AppState state, SaveDataToGlobalData action) {
+  //print(action.email);
+  final AppStateBuilder b = state.toBuilder();
+  //SetAddNotesAction usrNote = SetAddNotesAction(email: action.email, note: action.note);
+  b..userNotesList = action.usrNotes.toBuilder();
   return b.build();
 }
