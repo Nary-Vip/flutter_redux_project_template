@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,6 @@ import 'package:personal_pjt/actions/actions.dart';
 import 'package:personal_pjt/data/app_repository.dart';
 import 'package:personal_pjt/data/services/auth/auth_service.dart';
 import 'package:personal_pjt/models/app_notes.dart';
-import 'package:personal_pjt/models/app_user.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:redux/redux.dart';
 
@@ -19,44 +20,64 @@ class AuthMiddleware {
   List<Middleware<AppState>> createAuthMiddleware() {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, SetAddNotesAction>(addingUserNotes),
-      TypedMiddleware<AppState, loggedInMail>(fetchingNotes),
-      TypedMiddleware<AppState, CheckForUserInPrefs>(checkForUserInPrefs),
+      TypedMiddleware<AppState, LoggedInMail>(fetchingNotes),
+      //TypedMiddleware<AppState, CheckForUserInPrefs>(checkForUserInPrefs),
       TypedMiddleware<AppState, LoginWithPassword>(loginWithPassword),
       TypedMiddleware<AppState, LogOutUser>(logOutUser),
       //TypedMiddleware<AppState, SetFetchingNotes>(fetchNotes)
     ];
   }
 
-  void checkForUserInPrefs(Store<AppState> store, CheckForUserInPrefs action,
-      NextDispatcher next) async {
-    next(action);
-    try {
-      final AppUser? user = await repository.getUserFromPrefs();
+  // void checkForUserInPrefs(Store<AppState> store, CheckForUserInPrefs action,
+  //     NextDispatcher next) async {
+  //   next(action);
+  //   try {
+  //     final AppUser? user = await repository.getUserFromPrefs();
 
-      if (user != null) {
-        store.dispatch(SetInitializer(false));
-        store.dispatch(SaveUser(userDetails: user));
-      } else {
-        store.dispatch(SetInitializer(false));
-        store.dispatch(SaveUser(userDetails: null));
-      }
-    } catch (e) {
-      return;
-    }
-  }
+  //     if (user != null) {
+  //       store.dispatch(SetInitializer(false));
+  //       store.dispatch(SaveUser(userDetails: user));
+  //     } else {
+  //       store.dispatch(SetInitializer(false));
+  //       store.dispatch(SaveUser(userDetails: null));
+  //     }
+  //   } catch (e) {
+  //     return;
+  //   }
+  // }
 
   void fetchingNotes(
-      Store<AppState> store, loggedInMail action, NextDispatcher next) async {
+      Store<AppState> store, LoggedInMail action, NextDispatcher next) async {
     try {
+      print("Fetching mail ${action.email}");
       store.dispatch(SetLoader(true));
       final CollectionReference _usersNotes =
           FirebaseFirestore.instance.collection("userNotes");
 
       final isUserExists = _usersNotes.doc(action.email);
-      AppNotes? res;
+      print("Accesing");
+      print({isUserExists});
+      //print(action.email);
+
       isUserExists.get().then(
         (DocumentSnapshot doc) {
-          res = doc.data() as AppNotes?;
+          var temp = doc.data();
+          //json.decode(doc.data().toString());
+          print("------$temp");
+          AppNotes? res =
+              serializers.deserializeWith(AppNotes.serializer, temp);
+          print("kuriyidu $res");
+          //print(doc.data())
+
+          // res = AppNotesBuilder().build()
+          //   ..userMail = action.email
+          //   ..userNotes = doc.data()['noteList'];
+          //AppNotesBuilder().userMail = action.email;
+
+          //AppNotesBuilder().userNotes =
+          //res = doc.data() as AppNotes?;
+          //AppNotes.serializer(res);
+          //print(res);
           store.dispatch(SaveDataToGlobalData(res!));
         },
         onError: (e) => print("Error Retirieving Data"),
@@ -93,12 +114,14 @@ class AuthMiddleware {
     try {
       //String registrationToken = '';
       store.dispatch(SetLoader(true));
+
       final instance = FirebaseAuth.instance;
       print(action.email);
       print(action.password);
       await instance.signInWithEmailAndPassword(
           email: action.email, password: action.password);
       action.onSuccess("success");
+      //store.dispatch(SaveUser(userDetails: AppUser(action.email)));
       store.dispatch(SetIsLoginError(isLoginError: "ok"));
       store.dispatch(SetLoader(false));
     } on FirebaseAuthException catch (e) {

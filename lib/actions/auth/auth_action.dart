@@ -89,8 +89,16 @@ class SaveDataToGlobalData {
   SaveDataToGlobalData(this.usrNotes);
 }
 
-class loggedInMail {
+//**************************** trigger the fetch Function *************************//
+class LoggedInMail {
   final String email;
 
-  loggedInMail(this.email);
+  LoggedInMail(this.email);
+}
+
+//**************************** save the user logged *************************//
+class LoggedInUser {
+  final String email;
+
+  LoggedInUser(this.email);
 }

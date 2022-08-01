@@ -26,11 +26,11 @@ AppState setIsLoginError(AppState state, SetIsLoginError action) {
   return b.build();
 }
 
-// AppState setCurrentUser(AppState state, SetCurrentUser action) {
-//   final AppStateBuilder b = state.toBuilder();
-//   b..currentUser = action.currentUser;
-//   return b.build();
-// }
+AppState setCurrentUser(AppState state, SaveUser action) {
+  final AppStateBuilder b = state.toBuilder();
+  b..currentUser = action.userDetails!.toBuilder();
+  return b.build();
+}
 
 AppState setInitializer(AppState state, SetInitializer action) {
   final AppStateBuilder b = state.toBuilder();

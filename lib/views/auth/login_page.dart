@@ -54,10 +54,10 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         msg = "Login Success";
       });
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) {
-        return HomePage();
-      }));
+      // Navigator.of(context)
+      //     .push(MaterialPageRoute(builder: (BuildContext context) {
+      //   return HomePage();
+      // }));
       if (_chkBox) {
         pref.setStringList("user", [email, password]);
       } else {
@@ -245,13 +245,14 @@ class _LoginPageState extends State<LoginPage> {
                                       model.loginWithPassword(email, password, (
                                         String successMsg,
                                       ) {
-                                        model.loggedInmail(email);
+                                        model.setUserMail(email);
+
                                         _emailController.text = "";
                                         _passwordController.text = "";
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                             builder: (BuildContext context) {
-                                              return HomePage();
+                                              return HomePage(email);
                                             },
                                           ),
                                         );

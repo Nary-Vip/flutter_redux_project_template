@@ -4,6 +4,9 @@ import 'package:personal_pjt/views/pages/UsersNoteList.dart';
 
 // multiple connector example  uses auth_connector and todo_connector
 class HomePage extends StatelessWidget {
+  HomePage(this.email);
+  final String email;
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController _titleController = TextEditingController();
@@ -28,6 +31,7 @@ class HomePage extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.notes),
                 onPressed: () {
+                  authModel.getUserNotes(email);
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (BuildContext context) {
                     return NoteList();
@@ -104,7 +108,8 @@ class HomePage extends StatelessWidget {
                               final title = _titleController.text;
                               final desc = _descController.text;
                               //authModel.mailAndNotes;
-                              authModel.mailAndNotes("nary2vip@gmail.com",
+                              authModel.mailAndNotes(
+                                  authModel.currentUser!.email!,
                                   {"title": title, "desc": desc});
                               showDialog(
                                   context: context,

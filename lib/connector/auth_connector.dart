@@ -10,9 +10,11 @@ part 'auth_connector.g.dart';
 
 typedef LoginWithPasswordAction = void Function(String email, String password,
     ValueChanged<String> onSuccess, ValueChanged<String> onError);
+typedef AppGetNotesAction = void Function(String email);
 typedef AppNotesAction = void Function(String email, Map<String, dynamic> note);
 typedef LoggedInMailConnector = void Function(String email);
 typedef LogOutAction = void Function();
+typedef SetUserMail = void Function(String email);
 
 abstract class AuthViewModel
     implements Built<AuthViewModel, AuthViewModelBuilder> {
@@ -26,20 +28,33 @@ abstract class AuthViewModel
     return AuthViewModel((AuthViewModelBuilder b) {
       return b
         ..isInitializing = store.state.isInitializing
+        ..usrNoteList = store.state.userNotesList?.toBuilder()
+        ..setUserMail = (String email) {
+          AppUser user = AppUser();
+          user = user.rebuild((b) => b..email = email);
+          store.dispatch(SaveUser(userDetails: user));
+        }
         ..currentUser = store.state.currentUser?.toBuilder()
         ..isLoading = store.state.isLoading
         ..loggedInmail = (String email) {
-          store.dispatch(loggedInMail(email));
+          store.dispatch(LoggedInMail(email));
         }
-        ..getUserNotes = store.state.userNotesList?.toBuilder()
+        ..getUserNotes = (String email) {
+          store.dispatch(
+            LoggedInMail(email),
+          );
+        }
         ..isLoginError = store.state.isLoginError
         ..loginWithPassword = (String email, String password,
             ValueChanged<String> onSuccess, ValueChanged<String> onError) {
-          store.dispatch(LoginWithPassword(
+          store.dispatch(
+            LoginWithPassword(
               email: email,
               password: password,
               onSuccess: onSuccess,
-              onError: onError));
+              onError: onError,
+            ),
+          );
         }
         ..mailAndNotes = (String email, Map<String, dynamic> note) {
           store.dispatch(SetAddNotesAction(email: email, note: note));
@@ -52,7 +67,12 @@ abstract class AuthViewModel
 
   LoginWithPasswordAction get loginWithPassword;
 
-  AppNotes get getUserNotes;
+  AppNotes? get usrNoteList;
+
+  //Trigger fetch notes by sending the email.
+  AppGetNotesAction get getUserNotes;
+
+  SetUserMail get setUserMail;
 
   LoggedInMailConnector get loggedInmail;
 
@@ -60,6 +80,7 @@ abstract class AuthViewModel
 
   AppUser? get currentUser;
 
+  //adding an note
   AppNotesAction get mailAndNotes;
 
   bool get isInitializing;

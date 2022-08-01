@@ -10,7 +10,8 @@ import 'package:personal_pjt/middleware/middleware.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:personal_pjt/reducers/reducers.dart';
 import 'package:personal_pjt/theme.dart';
-import 'package:personal_pjt/views/init_page.dart';
+import 'package:personal_pjt/views/auth/login_page.dart';
+//import 'package:personal_pjt/views/init_page.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //My imports
@@ -74,7 +75,8 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: store.state.navigator,
         title: 'NaryNotes',
         theme: themeData,
-        home: InitPage(),
+        //home: InitPage(),
+        home: LoginPage(),
         debugShowCheckedModeBanner: false,
       ),
     );
