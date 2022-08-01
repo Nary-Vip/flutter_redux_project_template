@@ -18,8 +18,14 @@ class HomePage extends StatelessWidget {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: Text(
-                'Home Page for ${authModel.currentUser?.email ?? 'no user'}'),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            centerTitle: true,
+            title: Text('Nary Notes'),
             actions: <Widget>[
               IconButton(
                 icon: const Icon(Icons.logout),
@@ -54,10 +60,12 @@ class HomePage extends StatelessWidget {
                       ),
                       Text(
                         "Notes Application",
-                        style: TextStyle(color: Colors.grey, fontSize: 28),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 101, 101, 101),
+                            fontSize: 28),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.3,
+                        height: MediaQuery.of(context).size.width * 0.1,
                       ),
                       TextFormField(
                         controller: _titleController,
@@ -95,6 +103,13 @@ class HomePage extends StatelessWidget {
                           }
                           return null;
                         },
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.1,
+                      ),
+                      Text(
+                        "Notes are encrypted with 69bit encryption",
+                        style: TextStyle(color: Colors.grey),
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.width * 0.1,

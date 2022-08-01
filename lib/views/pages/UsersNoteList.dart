@@ -9,12 +9,6 @@ class NoteList extends StatefulWidget {
 }
 
 class _NoteListState extends State<NoteList> {
-  void fetchUserNotes(AuthViewModel model) async {
-    print(model.usrNoteList);
-    //xmodel.getUserNotes(model.);
-    //print(model.getUserNotes.userNotes);
-  }
-
   @override
   Widget build(BuildContext context) {
     return AuthConnector(
@@ -24,14 +18,55 @@ class _NoteListState extends State<NoteList> {
           child: Expanded(
             child: (authModel.usrNoteList!.userNotes!.length == 0)
                 ? Text("No Lists available")
-                : ListView.builder(
-                    itemCount: authModel.usrNoteList!.userNotes!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        title: Text(
-                            "${authModel.usrNoteList!.userNotes![index].title}"),
-                      );
-                    },
+                : Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          child: Center(
+                            child: Text(
+                              "Your Notes",
+                              style: TextStyle(fontSize: 28),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Expanded(
+                              child: ListView.builder(
+                                itemCount:
+                                    authModel.usrNoteList!.userNotes!.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Card(
+                                    color: Colors.purpleAccent,
+                                    elevation: 5,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            "${authModel.usrNoteList!.userNotes![index].title}",
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "${authModel.usrNoteList!.userNotes![index].desc}",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          ),
+                                        ]),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
           ),
         ),

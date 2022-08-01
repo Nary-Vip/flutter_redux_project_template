@@ -246,7 +246,7 @@ class _LoginPageState extends State<LoginPage> {
                                         String successMsg,
                                       ) {
                                         model.setUserMail(email);
-
+                                        model.getUserNotes(email);
                                         _emailController.text = "";
                                         _passwordController.text = "";
                                         Navigator.of(context).pushReplacement(
