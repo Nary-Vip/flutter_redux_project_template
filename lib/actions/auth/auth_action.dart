@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:personal_pjt/models/api_book.dart';
+import 'package:personal_pjt/models/api_bookUser.dart';
 import 'package:personal_pjt/models/app_notes.dart';
+import 'package:personal_pjt/models/app_todo.dart';
 import 'package:personal_pjt/models/app_user.dart';
 
 class CheckForUserInPrefs {}
@@ -84,7 +87,7 @@ class SetAddNotesAction {
 class GetFetchingNotes {}
 
 class SaveDataToGlobalData {
-  final AppNotes usrNotes;
+  final AppNotesJson usrNotes;
 
   SaveDataToGlobalData(this.usrNotes);
 }
@@ -101,4 +104,18 @@ class LoggedInUser {
   final String email;
 
   LoggedInUser(this.email);
+}
+
+class BookLoggedInUser {
+  final ApiBookUser loggedInBookStoreUser;
+  final ValueChanged<String> onSuccess;
+  final ValueChanged<String> onError;
+
+  BookLoggedInUser(this.loggedInBookStoreUser, this.onError, this.onSuccess);
+}
+
+class GetBookForTheUsers {
+  final ApiBook booksOfTheUsers;
+
+  GetBookForTheUsers(this.booksOfTheUsers);
 }

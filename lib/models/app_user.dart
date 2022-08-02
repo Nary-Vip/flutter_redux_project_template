@@ -17,6 +17,8 @@ abstract class AppUser implements Built<AppUser, AppUserBuilder> {
   @BuiltValueField(wireName: 'last_name')
   String? get lastName;
 
+  String? get token;
+
   String? get email;
 
   String? get mobile;

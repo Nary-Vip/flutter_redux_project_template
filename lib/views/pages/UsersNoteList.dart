@@ -16,7 +16,7 @@ class _NoteListState extends State<NoteList> {
       return Scaffold(
         body: SafeArea(
           child: Expanded(
-            child: (authModel.usrNoteList!.userNotes!.length == 0)
+            child: (authModel.usrNoteList!.noteId == null)
                 ? Text("No Lists available")
                 : Center(
                     child: Column(
@@ -33,35 +33,52 @@ class _NoteListState extends State<NoteList> {
                         Expanded(
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.6,
-                            child: Expanded(
-                              child: ListView.builder(
-                                itemCount:
-                                    authModel.usrNoteList!.userNotes!.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Card(
-                                    color: Colors.purpleAccent,
-                                    elevation: 5,
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(
-                                            "${authModel.usrNoteList!.userNotes![index].title}",
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            "${authModel.usrNoteList!.userNotes![index].desc}",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14),
-                                          ),
-                                        ]),
-                                  );
-                                },
-                              ),
+                            child: ListView.builder(
+                              itemCount: 1,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Card(
+                                  color: Colors.purpleAccent,
+                                  elevation: 5,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Note Id: ${authModel.usrNoteList!.noteId}",
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Title : ${authModel.usrNoteList!.title}",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 14),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Status : ${authModel.usrNoteList!.completed}",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 14),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          authModel.getUserNotes("del");
+                                        },
+                                        icon: Icon(Icons.delete),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),

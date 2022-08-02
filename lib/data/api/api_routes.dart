@@ -4,7 +4,7 @@ class ApiRoutes {
 //  https://jsonplaceholder.typicode.com/todos/
   static const ApiConfig debugConfig = ApiConfig(
     scheme: 'https',
-    host: 'api.uat.finobuddy.com',
+    host: 'secure-peak-85591.herokuapp.com',
 //    port: 443,
     scope: scope,
   );

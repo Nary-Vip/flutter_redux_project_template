@@ -32,8 +32,7 @@ class Logger {
 
   final String tag;
 
-  static bool get isProduction =>
-      const bool.fromEnvironment('dart.vm.product');
+  static bool get isProduction => const bool.fromEnvironment('dart.vm.product');
 
   void d(String log) {
     if (isProduction) {
@@ -94,7 +93,7 @@ class Utils {
         borderRadius: BorderRadius.circular(100.0),
         child: FadeInImage.assetNetwork(
           placeholder: AppAssets.dummyPlaceholder,
-          image: url ,
+          image: url,
           fit: BoxFit.cover,
         ),
       ),
@@ -130,7 +129,7 @@ class Utils {
         borderRadius: BorderRadius.circular(10.0),
         child: FadeInImage.assetNetwork(
           placeholder: AppAssets.dummyPlaceholder,
-          image: imageURL ,
+          image: imageURL,
           fit: BoxFit.fill,
         ),
       ),

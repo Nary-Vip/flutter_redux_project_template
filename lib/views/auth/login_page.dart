@@ -182,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                             validator: (val) {
                               if (val!.length == 0) {
                                 return "Enter a valid password";
-                              } else if (val.length < 8) {
+                              } else if (val.length < 5) {
                                 return "Password length must be greater than 8";
                               } else {
                                 return null;
@@ -242,11 +242,10 @@ class _LoginPageState extends State<LoginPage> {
                                       form.save();
                                       //_formKey.currentState?.validate
                                       //loginUserWithEmail(context);
-                                      model.loginWithPassword(email, password, (
-                                        String successMsg,
-                                      ) {
-                                        model.setUserMail(email);
-                                        model.getUserNotes(email);
+
+                                      model.bookStoreUsrDetails(
+                                          email, password, "token",
+                                          (String successMsg) {
                                         _emailController.text = "";
                                         _passwordController.text = "";
                                         Navigator.of(context).pushReplacement(
@@ -257,7 +256,9 @@ class _LoginPageState extends State<LoginPage> {
                                           ),
                                         );
                                         print(successMsg);
-                                      }, (String errorMsg) {
+                                        print(model
+                                            .bookStoreLoggedInUser!.username);
+                                      }, (String errorMessage) {
                                         showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
@@ -265,11 +266,33 @@ class _LoginPageState extends State<LoginPage> {
                                             content: Text("$msg"),
                                           ),
                                         );
-                                        print(errorMsg);
+                                        print(errorMessage);
                                       });
-
-                                      result = model.isLoginError;
-                                      print("Edittt $result");
+                                      // model.loginWithPassword(email, password, (
+                                      //   String successMsg,
+                                      // ) {
+                                      //   model.setUserMail("1");
+                                      //   model.getUserNotes("1");
+                                      // _emailController.text = "";
+                                      // _passwordController.text = "";
+                                      // Navigator.of(context).pushReplacement(
+                                      //   MaterialPageRoute(
+                                      //     builder: (BuildContext context) {
+                                      //       return HomePage(email);
+                                      //     },
+                                      //   ),
+                                      // );
+                                      // print(successMsg);
+                                      // }, (String errorMsg) {
+                                      //   showDialog(
+                                      //     context: context,
+                                      //     builder: (context) => AlertDialog(
+                                      //       title: Text("Hi User"),
+                                      //       content: Text("$msg"),
+                                      //     ),
+                                      //   );
+                                      //   print(errorMsg);
+                                      // });
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(

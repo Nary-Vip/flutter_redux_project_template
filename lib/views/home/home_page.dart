@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
             ),
             centerTitle: true,
             title: Text('Nary Notes'),
-            actions: <Widget>[
+            actions: [
               IconButton(
                 icon: const Icon(Icons.logout),
                 onPressed: () {
@@ -37,11 +37,14 @@ class HomePage extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.notes),
                 onPressed: () {
-                  authModel.getUserNotes(email);
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (BuildContext context) {
-                    return NoteList();
-                  }));
+                  authModel.getUserNotes("1");
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return NoteList();
+                      },
+                    ),
+                  );
                 },
               ),
             ],
