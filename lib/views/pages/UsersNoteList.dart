@@ -105,18 +105,54 @@ class _NoteListState extends State<NoteList> {
                                                     fontSize: 22),
                                               ),
                                             ),
-                                            IconButton(
-                                              icon: Icon(Icons.delete),
-                                              color: Color.fromRGBO(
-                                                  255, 255, 255, 1),
-                                              iconSize: 26,
-                                              onPressed: () {
-                                                authModel.deleteBook(authModel
-                                                    .getUsrBooks
-                                                    .listOfBooks![index]
-                                                    .id);
-                                                authModel.fetchBooksForTheUsers(
-                                                    authModel.userToken);
+                                            PopupMenuButton<String>(
+                                              color: Colors.white,
+                                              icon: Icon(
+                                                Icons.more_horiz,
+                                                color: Colors.white,
+                                              ),
+                                              onSelected: (String value) {
+                                                switch (value) {
+                                                  case 'Edit':
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return AlertDialog(
+                                                          title: Text("Oops !"),
+                                                          content: Text(
+                                                              "Edit option is in WIP"),
+                                                        );
+                                                      },
+                                                    );
+                                                    break;
+                                                  case 'Delete':
+                                                    authModel.deleteBook(
+                                                        authModel
+                                                            .getUsrBooks
+                                                            .listOfBooks![index]
+                                                            .id);
+                                                    authModel
+                                                        .fetchBooksForTheUsers(
+                                                            authModel
+                                                                .userToken);
+                                                    break;
+                                                }
+                                              },
+                                              itemBuilder:
+                                                  (BuildContext context) {
+                                                return {'Edit', 'Delete'}
+                                                    .map((String choice) {
+                                                  return PopupMenuItem<String>(
+                                                    value: choice,
+                                                    child: Text(
+                                                      choice,
+                                                      style: GoogleFonts.inder(
+                                                        textStyle: TextStyle(
+                                                            fontSize: 18),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).toList();
                                               },
                                             ),
                                           ],
