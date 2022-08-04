@@ -1,4 +1,7 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:rive/rive.dart';
 
 class AppLoader extends StatefulWidget {
   @override
@@ -9,21 +12,36 @@ class _AppLoaderState extends State<AppLoader> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Text('qwc'),
+            padding: EdgeInsets.all(40),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            width: 700,
+            height: 300,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              clipBehavior: Clip.antiAlias,
+              child: RiveAnimation.asset(
+                "assets/animation/basket_ball.riv",
+                placeHolder: Text("Loading"),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-          Positioned(
-              left: 0.0,
-              right: 0.0,
-              bottom: MediaQuery.of(context).size.height * 0.5,
-              child: Container(
-                height: 70.0,
-                child: Text('qkjbdc'),
-              ))
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            "Nary Books",
+            style: GoogleFonts.akayaKanadaka(
+                textStyle:
+                    TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+          )
         ],
       ),
     );

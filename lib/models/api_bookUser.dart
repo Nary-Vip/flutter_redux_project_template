@@ -10,6 +10,7 @@ abstract class User implements Built<User, UserBuilder> {
 
   String? get username;
   String? get password;
+  String? get token;
 
   static Serializer<User> get serializer => _$userSerializer;
 }

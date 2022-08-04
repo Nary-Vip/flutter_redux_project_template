@@ -10,9 +10,7 @@ import 'package:personal_pjt/middleware/middleware.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:personal_pjt/reducers/reducers.dart';
 import 'package:personal_pjt/theme.dart';
-import 'package:personal_pjt/views/auth/login_page.dart';
 import 'package:personal_pjt/views/init_page.dart';
-//import 'package:personal_pjt/views/init_page.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -60,8 +58,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _init() {
-    Future<void>.delayed(Duration(seconds: 2), () {
-      store.dispatch(new CheckForUserInPrefs());
+    Future<void>.delayed(Duration(seconds: 3), () {
+      store.dispatch(CheckForUserInPrefs());
     });
   }
 
@@ -73,8 +71,8 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: store.state.navigator,
         title: 'NaryNotes',
         theme: themeData,
-        //home: InitPage(),
-        home: LoginPage(),
+        home: InitPage(),
+        //home: LoginPage(),
         debugShowCheckedModeBanner: false,
       ),
     );

@@ -1,10 +1,11 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:personal_pjt/actions/actions.dart';
 import 'package:personal_pjt/data/app_repository.dart';
 import 'package:personal_pjt/data/services/auth/auth_service.dart';
 import 'package:personal_pjt/models/api_book.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:redux/redux.dart';
+
+import '../../models/api_bookUser.dart';
 
 class AuthMiddleware {
   AuthMiddleware({required this.repository})
@@ -16,6 +17,7 @@ class AuthMiddleware {
   List<Middleware<AppState>> createAuthMiddleware() {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, LoginWithPassword>(loginWithPassword),
+      TypedMiddleware<AppState, CheckForUserInPrefs>(checkForUserInPrefs),
       TypedMiddleware<AppState, LogOutUser>(logOutUser),
       TypedMiddleware<AppState, FetchBookForTheUser>(fetchUsersBook),
       TypedMiddleware<AppState, PushBooks>(pushBooksMiddleWare),
@@ -25,10 +27,16 @@ class AuthMiddleware {
 
   void logOutUser(
       Store<AppState> store, LogOutUser action, NextDispatcher next) async {
-    repository.setUserPrefs(appUser: null);
-    store.dispatch(SaveUser(null, null));
-    //
-    store.dispatch(SetIsLoginError(isLoginError: "none"));
+    print("Log oout action performing");
+    final ApiSuccessBuilder user1 = ApiSuccess().toBuilder();
+    user1
+      ..user.username = null
+      ..user.token = null
+      ..user.password = null;
+    print(user1.build());
+
+    repository.setUserPrefs(appUser: user1.build());
+    //store.dispatch(SaveUser(null));
     next(action);
   }
 
@@ -84,13 +92,43 @@ class AuthMiddleware {
       action.onError("Invalid User");
     } else {
       action.onSuccess("success");
+
+      //Saving the username and token to userprefference
+      final UserBuilder user = User().toBuilder();
+      user
+        ..token = response["token"]
+        ..username = action.username;
+
+      final ApiSuccessBuilder saveUser = ApiSuccess().toBuilder();
+      saveUser..user = user;
+      repository.setUserPrefs(appUser: saveUser.build());
+      //store.dispatch(SaveUser(action.username, action.password));
       print(response);
 
-      store.dispatch(SaveUser(action.username, action.password));
-
+      store.dispatch(SaveUser(saveUser.build()));
       store.dispatch(SaveTokenAction(response["token"]));
 
       store.dispatch(SetLoader(false));
+    }
+  }
+
+  void checkForUserInPrefs(Store<AppState> store, CheckForUserInPrefs action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      final ApiSuccess? user = await repository.getUserFromPrefs();
+
+      if (user!.user!.username != null) {
+        store.dispatch(SaveTokenAction(user.user!.token));
+        store.dispatch(SetInitializer(false));
+        store.dispatch(SaveUser(user));
+      } else {
+        store.dispatch(SetInitializer(false));
+        store.dispatch(SaveUser(null));
+      }
+    } catch (e) {
+      print(e);
+      return;
     }
   }
 }
@@ -119,23 +157,7 @@ class AuthMiddleware {
   //     store.dispatch(SaveDataToGlobalData(res!));
   //   }
   // }
-  // void checkForUserInPrefs(Store<AppState> store, CheckForUserInPrefs action,
-  //     NextDispatcher next) async {
-  //   next(action);
-  //   try {
-  //     final AppUser? user = await repository.getUserFromPrefs();
-
-  //     if (user != null) {
-  //       store.dispatch(SetInitializer(false));
-  //       store.dispatch(SaveUser(userDetails: user));
-  //     } else {
-  //       store.dispatch(SetInitializer(false));
-  //       store.dispatch(SaveUser(userDetails: null));
-  //     }
-  //   } catch (e) {
-  //     return;
-  //   }
-  // }
+  
 
   // void fetchingNotes(
   //     Store<AppState> store, LoggedInMail action, NextDispatcher next) async {

@@ -11,6 +11,7 @@ Reducer<AppState> authReducer = combineReducers(<Reducer<AppState>>[
   TypedReducer<AppState, SetSuccessMessage>(setSuccessMessage),
   TypedReducer<AppState, GetBookForTheUsers>(getBookForTheUser),
   TypedReducer<AppState, SaveTokenAction>(setUserToken),
+  TypedReducer<AppState, SaveUser>(setBookLoggedInUser)
 ]);
 
 AppState setLoader(AppState state, SetLoader action) {
@@ -33,6 +34,7 @@ AppState setInitializer(AppState state, SetInitializer action) {
 }
 
 AppState logOutUser(AppState state, LogOutUser action) {
+  print("Loggin out");
   final AppStateBuilder b = state.toBuilder();
   b
     ..isInitializing = false
@@ -69,7 +71,8 @@ void updateSuccessMessageState(AppState state) {
 AppState setBookLoggedInUser(AppState state, SaveUser action) {
   //print(action.email);
   final AppStateBuilder b = state.toBuilder();
-  b..bookStoreLoggedInUser = action.username;
+  b..currentUser = action.userDetails!.toBuilder();
+  print("curr ${b.currentUser.token}");
   return b.build();
 }
 

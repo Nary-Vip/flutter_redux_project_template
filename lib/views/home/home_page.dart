@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
+import 'package:personal_pjt/views/init_page.dart';
 import 'package:personal_pjt/views/pages/UsersNoteList.dart';
 
 // multiple connector example  uses auth_connector and todo_connector
@@ -26,22 +27,34 @@ class HomePage extends StatelessWidget {
               },
             ),
             centerTitle: true,
-            title: Text('Book Management',
-                style: GoogleFonts.adventPro(
-                    textStyle:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 24))),
+            title: Text(
+              'Book Management',
+              style: GoogleFonts.adventPro(
+                textStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+            ),
             actions: [
               IconButton(
                 icon: const Icon(Icons.logout_rounded),
                 onPressed: () {
-                  authModel.logOut;
-                  Navigator.of(context).pop();
+                  authModel.logOut();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return InitPage();
+                      },
+                    ),
+                  );
                 },
               ),
               IconButton(
                 icon: const Icon(Icons.note_alt_outlined),
                 onPressed: () {
                   authModel.fetchBooksForTheUsers(authModel.userToken);
+
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
@@ -63,14 +76,49 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.2,
+                        height: MediaQuery.of(context).size.width * 0.1,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Hello !",
+                            style: GoogleFonts.aBeeZee(
+                              textStyle: TextStyle(
+                                  color: Colors.lightBlueAccent,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            (authModel.currentUser != null)
+                                ? "${authModel.currentUser!.user!.username}"
+                                : "${authModel.bookStoreLoggedInUser}",
+                            style: GoogleFonts.acme(
+                              textStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 101, 101, 101),
+                                  fontSize: 26),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.1,
                       ),
                       Text(
-                        "Book Management System",
-                        style: GoogleFonts.acme(
+                        "Publish the Books",
+                        style: GoogleFonts.aBeeZee(
                           textStyle: TextStyle(
-                              color: Color.fromARGB(255, 101, 101, 101),
-                              fontSize: 26),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.grey),
                         ),
                       ),
                       SizedBox(
@@ -93,7 +141,7 @@ class HomePage extends StatelessWidget {
                         },
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.1,
+                        height: MediaQuery.of(context).size.width * 0.08,
                       ),
                       TextFormField(
                         controller: _authorController,
@@ -114,7 +162,7 @@ class HomePage extends StatelessWidget {
                         },
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.1,
+                        height: MediaQuery.of(context).size.width * 0.08,
                       ),
                       TextFormField(
                         controller: _authorAge,
@@ -134,7 +182,7 @@ class HomePage extends StatelessWidget {
                         keyboardType: TextInputType.number,
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.1,
+                        height: MediaQuery.of(context).size.width * 0.08,
                       ),
                       TextFormField(
                         controller: _authorLastName,
@@ -153,7 +201,7 @@ class HomePage extends StatelessWidget {
                         },
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.width * 0.1,
+                        height: MediaQuery.of(context).size.width * 0.08,
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(

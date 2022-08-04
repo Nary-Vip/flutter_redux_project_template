@@ -13,7 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _loginKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Padding(
                 padding: EdgeInsets.all(30),
                 child: Form(
-                  key: _formKey,
+                  key: _loginKey,
                   child: Center(
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
@@ -193,16 +193,11 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: () async {
                                     email = _emailController.text;
                                     password = _passwordController.text;
-                                    final form = _formKey.currentState;
+                                    final form = _loginKey.currentState;
                                     if (form!.validate()) {
                                       form.save();
-                                      //_formKey.currentState?.validate
-                                      //loginUserWithEmail(context);
-                                      User user = User();
-
-                                      print(
-                                          "Login page rebuild ${user.password}");
-
+                                      //_loginKey.currentState?.validate
+                                      //loginUserWithEmail(context);s
                                       model.loginWithPassword(email, password,
                                           (String successMsg) {
                                         _emailController.text = "";

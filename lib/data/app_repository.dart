@@ -39,11 +39,11 @@ class AppRepository {
     return services!.firstWhere((ApiService s) => s is T);
   }
 
-  Future<AppUser?> getUserFromPrefs() async {
+  Future<ApiSuccess?> getUserFromPrefs() async {
     return preferencesClient!.getUser();
   }
 
-  Future<void> setUserPrefs({AppUser? appUser}) async {
+  Future<void> setUserPrefs({ApiSuccess? appUser}) async {
     preferencesClient!.saveUser(appUser: appUser);
   }
 

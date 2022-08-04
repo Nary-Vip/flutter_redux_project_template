@@ -77,7 +77,7 @@ abstract class AuthViewModel
 
   LogOutConnector get logOut;
 
-  AppUser? get currentUser;
+  ApiSuccess? get currentUser;
 
   bool get isInitializing;
 

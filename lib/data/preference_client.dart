@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:personal_pjt/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,21 +7,22 @@ class PreferencesClient {
 
   final SharedPreferences prefs;
 
-  AppUser? getUser() {
+  ApiSuccess? getUser() {
     final String? userString = prefs.getString('appUser');
     if (userString == null) {
       return null;
     }
     final dynamic user = json.decode(userString);
-    return serializers.deserializeWith(AppUser.serializer, user);
+    return serializers.deserializeWith(ApiSuccess.serializer, user);
   }
 
-  void saveUser({AppUser? appUser}) {
+  void saveUser({ApiSuccess? appUser}) {
     if (appUser == null) {
       prefs.setString('appUser', '');
       return null;
     }
-    final dynamic user = serializers.serializeWith(AppUser.serializer, appUser);
+    final dynamic user =
+        serializers.serializeWith(ApiSuccess.serializer, appUser);
     final String userString = json.encode(user);
     prefs.setString('appUser', userString);
   }

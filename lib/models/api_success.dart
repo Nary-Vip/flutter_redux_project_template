@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:personal_pjt/models/api_bookUser.dart';
 import 'package:personal_pjt/models/models.dart';
 
 part 'api_success.g.dart';
@@ -18,7 +19,7 @@ abstract class ApiSuccess implements Built<ApiSuccess, ApiSuccessBuilder> {
   String? get token;
 
   @BuiltValueField(wireName: 'customer')
-  AppUser? get user;
+  User? get user;
 
 //***************************** pagination ***********************************//
   Pagination? get meta;
