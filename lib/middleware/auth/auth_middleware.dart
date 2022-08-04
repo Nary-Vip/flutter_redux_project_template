@@ -1,16 +1,8 @@
-import 'dart:convert';
-import "package:http/http.dart" as http;
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:personal_pjt/actions/actions.dart';
-import 'package:personal_pjt/connector/auth_connector.dart';
 import 'package:personal_pjt/data/app_repository.dart';
 import 'package:personal_pjt/data/services/auth/auth_service.dart';
 import 'package:personal_pjt/models/api_book.dart';
-import 'package:personal_pjt/models/api_bookUser.dart';
-import 'package:personal_pjt/models/app_notes.dart';
-import 'package:personal_pjt/models/app_todo.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:redux/redux.dart';
 
@@ -23,17 +15,86 @@ class AuthMiddleware {
 
   List<Middleware<AppState>> createAuthMiddleware() {
     return <Middleware<AppState>>[
-      TypedMiddleware<AppState, SetAddNotesAction>(addingUserNotes),
-      //TypedMiddleware<AppState, LoggedInMail>(fetchingNotes),
-      //TypedMiddleware<AppState, CheckForUserInPrefs>(checkForUserInPrefs),
-      TypedMiddleware<AppState, BookLoggedInUser>(loginWithPassword),
+      TypedMiddleware<AppState, LoginWithPassword>(loginWithPassword),
       TypedMiddleware<AppState, LogOutUser>(logOutUser),
-      //TypedMiddleware<AppState, SetFetchingNotes>(fetchNotes)
-
-      // API section MiddleWares
-      //TypedMiddleware<AppState, LoggedInMail>(fetchApi),
+      TypedMiddleware<AppState, FetchBookForTheUser>(fetchUsersBook),
+      TypedMiddleware<AppState, PushBooks>(pushBooksMiddleWare),
+      TypedMiddleware<AppState, DeleteBookAction>(deleteBook),
     ];
   }
+
+  void logOutUser(
+      Store<AppState> store, LogOutUser action, NextDispatcher next) async {
+    repository.setUserPrefs(appUser: null);
+    store.dispatch(SaveUser(null, null));
+    //
+    store.dispatch(SetIsLoginError(isLoginError: "none"));
+    next(action);
+  }
+
+  // Books Application MiddleWares
+
+  void fetchUsersBook(Store<AppState> store, FetchBookForTheUser action,
+      NextDispatcher next) async {
+    print("Fetching notes");
+    store.dispatch(SetLoader(true));
+    String? token = action.token;
+    print(token);
+    final BookInfo response = await authService.bookShopApi(token!);
+
+    //print(response.listOfBooks![0].authorAge);
+    store.dispatch(GetBookForTheUsers(response));
+    //print(store.state.getUsrBooks.listOfBooks![0].authorAge);
+    store.dispatch(SetLoader(false));
+    //print('-----${response.toString()');
+  }
+
+  void deleteBook(Store<AppState> store, DeleteBookAction action,
+      NextDispatcher next) async {
+    print("Deleting book");
+    authService.deleteBook(action.bookId, store.state.userToken);
+  }
+
+  void pushBooksMiddleWare(
+      Store<AppState> store, PushBooks action, NextDispatcher next) async {
+    store.dispatch(SetLoader(true));
+    print("Pushing books");
+    final BookList response = await authService.pushBookService(
+        action.age,
+        action.bookTitle,
+        action.authorName,
+        action.authorLastName,
+        store.state.userToken);
+    print('-----${response.toString()}');
+    store.dispatch(SetLoader(false));
+  }
+
+  void loginWithPassword(Store<AppState> store, LoginWithPassword action,
+      NextDispatcher next) async {
+    store.dispatch(SetLoader(true));
+    print("Login in process");
+    final username = action.username;
+    final password = action.password;
+    print(username);
+    final Map<String, dynamic> response =
+        await authService.loginBookPage(username, password);
+
+    if (response["token"] == "failed") {
+      store.dispatch(SetLoader(false));
+      action.onError("Invalid User");
+    } else {
+      action.onSuccess("success");
+      print(response);
+
+      store.dispatch(SaveUser(action.username, action.password));
+
+      store.dispatch(SaveTokenAction(response["token"]));
+
+      store.dispatch(SetLoader(false));
+    }
+  }
+}
+
 
   // void fetchApi(
   //     Store<AppState> store, LoggedInMail action, NextDispatcher next) async {
@@ -51,8 +112,8 @@ class AuthMiddleware {
   //       "https://jsonplaceholder.typicode.com/todos/${action.email}"));
   //   if (resp.statusCode == 200) {
   //     print(resp.body);
-  //     AppNotesJson? res = serializers.deserializeWith(
-  //         AppNotesJson.serializer, json.decode(resp.body));
+      // AppNotesJson? res = serializers.deserializeWith(
+      //     AppNotesJson.serializer, json.decode(resp.body));
   //     print(res);
   //     print("Note Id ${action.email} fetched");
   //     store.dispatch(SaveDataToGlobalData(res!));
@@ -116,28 +177,6 @@ class AuthMiddleware {
   //   } catch (e) {}
   // }
 
-  void addingUserNotes(Store<AppState> store, SetAddNotesAction action,
-      NextDispatcher next) async {
-    try {
-      print("middleware ${action.email}");
-      print(action.note);
-      store.dispatch(SetLoader(true));
-      final CollectionReference _usersNotes =
-          FirebaseFirestore.instance.collection("userNotes");
-      final isUserExists = _usersNotes.where("email", isEqualTo: action.email);
-      final doc = await isUserExists.get();
-      if (doc.docs.isEmpty) {
-        final List<Map<String, dynamic>> noteList = [action.note];
-        _usersNotes
-            .doc(action.email)
-            .set({"email": action.email, "noteList": noteList});
-      } else {
-        _usersNotes.doc(action.email).update({
-          "noteList": FieldValue.arrayUnion([action.note])
-        });
-      }
-    } catch (e) {}
-  }
 
   // void loginWithPassword(Store<AppState> store, LoginWithPassword action,
   //     NextDispatcher next) async {
@@ -206,44 +245,26 @@ class AuthMiddleware {
   //   next(action);
   // }
 
-  void logOutUser(
-      Store<AppState> store, LogOutUser action, NextDispatcher next) async {
-    repository.setUserPrefs(appUser: null);
-    store.dispatch(SaveUser(userDetails: null));
-    //
-    store.dispatch(SetIsLoginError(isLoginError: "none"));
-    next(action);
-  }
 
-  // Books Application MiddleWares
-
-  void fetchBook(
-      Store<AppState> store, LogOutUser action, NextDispatcher next) async {
-    store.dispatch(SetLoader(true));
-    String? token = store.state.bookStoreLoggedInUser.token;
-    final ApiBook response = await authService.bookShopApi(token!);
-    store.dispatch(GetBookForTheUsers(response));
-    store.dispatch(SetLoader(false));
-    //print('-----${response.toString()');
-  }
-
-  void loginWithPassword(Store<AppState> store, BookLoggedInUser action,
-      NextDispatcher next) async {
-    store.dispatch(SetLoader(true));
-    print("Login in process");
-    final username = action.loggedInBookStoreUser.username;
-    final password = action.loggedInBookStoreUser.password;
-    final ApiBookUser response =
-        await authService.loginBookPage(username, password);
-
-    action.onSuccess("success");
-
-    response.username = action.loggedInBookStoreUser.username;
-    response.password = action.loggedInBookStoreUser.password;
-
-    store
-        .dispatch(BookLoggedInUser(response, action.onSuccess, action.onError));
-
-    store.dispatch(SetLoader(false));
-  }
-}
+  // void addingUserNotes(Store<AppState> store, SetAddNotesAction action,
+  //     NextDispatcher next) async {
+  //   try {
+  //     print("middleware ${action.email}");
+  //     print(action.note);
+  //     store.dispatch(SetLoader(true));
+  //     final CollectionReference _usersNotes =
+  //         FirebaseFirestore.instance.collection("userNotes");
+  //     final isUserExists = _usersNotes.where("email", isEqualTo: action.email);
+  //     final doc = await isUserExists.get();
+  //     if (doc.docs.isEmpty) {
+  //       final List<Map<String, dynamic>> noteList = [action.note];
+  //       _usersNotes
+  //           .doc(action.email)
+  //           .set({"email": action.email, "noteList": noteList});
+  //     } else {
+  //       _usersNotes.doc(action.email).update({
+  //         "noteList": FieldValue.arrayUnion([action.note])
+  //       });
+  //     }
+  //   } catch (e) {}
+  // }

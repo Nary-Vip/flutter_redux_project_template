@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
-import 'package:personal_pjt/views/auth/SignUp.dart';
 import 'package:personal_pjt/views/home/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/api_bookUser.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -20,8 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late SharedPreferences pref;
-  final CollectionReference _users =
-      FirebaseFirestore.instance.collection("users");
 
   @override
   void initState() {
@@ -40,59 +36,14 @@ class _LoginPageState extends State<LoginPage> {
 
   var email;
   var password;
-  var phone;
   String? msg;
   bool passVisible = false;
-  final instance = FirebaseAuth.instance;
-
-  void loginUserWithEmail(context) async {
-    try {
-      await instance.signInWithEmailAndPassword(
-          email: email, password: password);
-      //_users.get({email: email});
-
-      setState(() {
-        msg = "Login Success";
-      });
-      // Navigator.of(context)
-      //     .push(MaterialPageRoute(builder: (BuildContext context) {
-      //   return HomePage();
-      // }));
-      if (_chkBox) {
-        pref.setStringList("user", [email, password]);
-      } else {
-        pref.setStringList("user", ["", ""]);
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        setState(() {
-          msg = 'No user found for that email.';
-        });
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        setState(() {
-          msg = 'Wrong password provided for that user.';
-        });
-        print('Wrong password provided for that user.');
-      }
-    } catch (e) {
-      print(e);
-    }
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Hi User"),
-        content: Text("$msg"),
-      ),
-    );
-  }
 
   var _chkBox = false;
   @override
   Widget build(BuildContext context) {
     return AuthConnector(
       builder: (BuildContext context, AuthViewModel model) {
-        print(model.isLoginError);
         return Scaffold(
           body: Center(
             child: SingleChildScrollView(
@@ -108,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            "Welcome Back Developer",
+                            "Welcome Back Reader",
                             style: GoogleFonts.inter(
                                 fontSize: 17, color: Colors.black),
                           ),
@@ -208,16 +159,19 @@ class _LoginPageState extends State<LoginPage> {
                                           _chkBox = newVal!;
                                         });
                                       }),
-                                  Text("Remember me"),
+                                  Text(
+                                    "Remember me",
+                                    style: GoogleFonts.akshar(),
+                                  ),
                                 ],
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                                      return const SignUp();
-                                    },
-                                  ));
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //   builder: (BuildContext context) {
+                                  //     return const SignUp();
+                                  //   },
+                                  // ));
                                 },
                                 child: Text(
                                   "Dont have an account?",
@@ -231,10 +185,12 @@ class _LoginPageState extends State<LoginPage> {
                             height: 35,
                           ),
                           model.isLoading
-                              ? CircularProgressIndicator()
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                  color: Colors.green,
+                                ))
                               : ElevatedButton(
                                   onPressed: () async {
-                                    var result;
                                     email = _emailController.text;
                                     password = _passwordController.text;
                                     final form = _formKey.currentState;
@@ -242,28 +198,30 @@ class _LoginPageState extends State<LoginPage> {
                                       form.save();
                                       //_formKey.currentState?.validate
                                       //loginUserWithEmail(context);
+                                      User user = User();
 
-                                      model.bookStoreUsrDetails(
-                                          email, password, "token",
+                                      print(
+                                          "Login page rebuild ${user.password}");
+
+                                      model.loginWithPassword(email, password,
                                           (String successMsg) {
                                         _emailController.text = "";
                                         _passwordController.text = "";
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                             builder: (BuildContext context) {
-                                              return HomePage(email);
+                                              return HomePage();
                                             },
                                           ),
                                         );
                                         print(successMsg);
-                                        print(model
-                                            .bookStoreLoggedInUser!.username);
+                                        print(model.bookStoreLoggedInUser);
                                       }, (String errorMessage) {
                                         showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
-                                            title: Text("Hi User"),
-                                            content: Text("$msg"),
+                                            title: Text("Oops!"),
+                                            content: Text("$errorMessage"),
                                           ),
                                         );
                                         print(errorMessage);

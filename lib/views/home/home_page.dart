@@ -1,43 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
 import 'package:personal_pjt/views/pages/UsersNoteList.dart';
 
 // multiple connector example  uses auth_connector and todo_connector
 class HomePage extends StatelessWidget {
-  HomePage(this.email);
-  final String email;
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _authorController = TextEditingController();
+  final TextEditingController _authorAge = TextEditingController();
+  final TextEditingController _authorLastName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _titleController = TextEditingController();
-    final TextEditingController _descController = TextEditingController();
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
     return AuthConnector(
       builder: (BuildContext authContext, AuthViewModel authModel) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
+            backgroundColor: Colors.lightBlue,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             centerTitle: true,
-            title: Text('Nary Notes'),
+            title: Text('Book Management',
+                style: GoogleFonts.adventPro(
+                    textStyle:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 24))),
             actions: [
               IconButton(
-                icon: const Icon(Icons.logout),
+                icon: const Icon(Icons.logout_rounded),
                 onPressed: () {
                   authModel.logOut;
                   Navigator.of(context).pop();
                 },
               ),
               IconButton(
-                icon: const Icon(Icons.notes),
+                icon: const Icon(Icons.note_alt_outlined),
                 onPressed: () {
-                  authModel.getUserNotes("1");
+                  authModel.fetchBooksForTheUsers(authModel.userToken);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
@@ -62,10 +66,12 @@ class HomePage extends StatelessWidget {
                         height: MediaQuery.of(context).size.width * 0.2,
                       ),
                       Text(
-                        "Notes Application",
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 101, 101, 101),
-                            fontSize: 28),
+                        "Book Management System",
+                        style: GoogleFonts.acme(
+                          textStyle: TextStyle(
+                              color: Color.fromARGB(255, 101, 101, 101),
+                              fontSize: 26),
+                        ),
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.width * 0.1,
@@ -90,10 +96,10 @@ class HomePage extends StatelessWidget {
                         height: MediaQuery.of(context).size.width * 0.1,
                       ),
                       TextFormField(
-                        controller: _descController,
+                        controller: _authorController,
                         decoration: InputDecoration(
-                          hintText: "Enter the Description",
-                          label: Text("Description"),
+                          hintText: "Enter the Author Name",
+                          label: Text("Author Name"),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
@@ -101,8 +107,8 @@ class HomePage extends StatelessWidget {
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Description should not be empty";
-                          } else if (value.length < 10) {
-                            return "Description must be atleast 10 characters in length";
+                          } else if (value.length < 6) {
+                            return "Description must be atleast 6 characters in length";
                           }
                           return null;
                         },
@@ -110,42 +116,90 @@ class HomePage extends StatelessWidget {
                       SizedBox(
                         height: MediaQuery.of(context).size.width * 0.1,
                       ),
-                      Text(
-                        "Notes are encrypted with 69bit encryption",
-                        style: TextStyle(color: Colors.grey),
+                      TextFormField(
+                        controller: _authorAge,
+                        decoration: InputDecoration(
+                          hintText: "Enter the Author Age",
+                          label: Text("Author Age"),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Author age should not be empty";
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.number,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.1,
+                      ),
+                      TextFormField(
+                        controller: _authorLastName,
+                        decoration: InputDecoration(
+                          hintText: "Enter the Author's Last Name",
+                          label: Text("Last Name"),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Book ID should not be empty";
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.width * 0.1,
                       ),
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.amber,
-                              padding: EdgeInsets.fromLTRB(25, 15, 25, 15)),
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              final title = _titleController.text;
-                              final desc = _descController.text;
-                              //authModel.mailAndNotes;
-                              authModel.mailAndNotes(
-                                  authModel.currentUser!.email!,
-                                  {"title": title, "desc": desc});
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Success",
-                                        style: TextStyle(color: Colors.green),
-                                      ),
-                                      content: Text("Note added successfully"),
-                                    );
-                                  });
-                            }
-                          },
-                          child: Text(
-                            "Submit",
-                            style: TextStyle(fontSize: 16),
-                          ))
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.lightBlue,
+                            padding: EdgeInsets.fromLTRB(25, 15, 25, 15)),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            authModel.pushBookCon(
+                                int.parse(_authorAge.text),
+                                _titleController.text,
+                                _authorController.text,
+                                _authorLastName.text);
+                            _authorAge.text = "";
+                            _titleController.text = "";
+                            _authorController.text = "";
+                            _authorLastName.text = "";
+
+                            //authModel.fetchBooksForTheUsers();
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                      "Success",
+                                      style: TextStyle(
+                                          color: Colors.green,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    content: Text("Book added successfully"),
+                                  );
+                                });
+                          }
+                        },
+                        child: (authModel.isLoading)
+                            ? (Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              ))
+                            : Text(
+                                "Submit",
+                                style: GoogleFonts.zillaSlab(
+                                    textStyle: TextStyle(fontSize: 18),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                      ),
 
                       //Text('${authModel.currentUser!.userId?.toString()}'),
                       //Text('${authModel.currentUser!.email?.toString()}'),

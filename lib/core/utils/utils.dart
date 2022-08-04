@@ -69,7 +69,7 @@ class Utils {
   static Future<Map<String, String>> getHeader(AccessToken token) async {
     return <String, String>{
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${token.accessToken}',
+      'Authorization': 'Bearer ${token.token}',
       'device_platform': Platform.isIOS ? 'ios' : 'android'
     };
   }

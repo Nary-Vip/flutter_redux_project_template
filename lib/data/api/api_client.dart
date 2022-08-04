@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:http/http.dart';
 import 'package:personal_pjt/core/utils/utils.dart';
 import 'package:personal_pjt/models/api_error.dart';
@@ -65,15 +66,19 @@ class ApiResponse<T> extends http.Response {
   T? _data;
 
   T? _getData() {
-    if (!isSuccess || body == null) {
+    if (!isSuccess || body == null || body == "") {
       return null;
     }
+    print("Body $body");
 
     dynamic decodedBody = json.decode(body);
+
     if (responseKey != null) {
       decodedBody = decodedBody[responseKey];
     }
-
+    if (decodedBody.runtimeType == List<dynamic>) {
+      decodedBody = {'books': decodedBody};
+    }
     return serializers.deserialize(
       decodedBody,
       specifiedType: fullType ?? FullType(T),

@@ -1,20 +1,16 @@
 import 'package:personal_pjt/actions/actions.dart';
-import 'package:personal_pjt/models/api_book.dart';
-import 'package:personal_pjt/models/api_bookUser.dart';
 import 'package:personal_pjt/models/app_state.dart';
 import 'package:redux/redux.dart';
 
 Reducer<AppState> authReducer = combineReducers(<Reducer<AppState>>[
-  TypedReducer<AppState, SaveUser>(setUser),
   TypedReducer<AppState, SetLoader>(setLoader),
   TypedReducer<AppState, SetIsLoginError>(setIsLoginError),
   TypedReducer<AppState, SetInitializer>(setInitializer),
   TypedReducer<AppState, LogOutUser>(logOutUser),
   TypedReducer<AppState, SetErrorMessage>(setErrorMessage),
   TypedReducer<AppState, SetSuccessMessage>(setSuccessMessage),
-  TypedReducer<AppState, SaveDataToGlobalData>(fetchUserNotes),
-  TypedReducer<AppState, BookLoggedInUser>(setBookLoggedInUser),
   TypedReducer<AppState, GetBookForTheUsers>(getBookForTheUser),
+  TypedReducer<AppState, SaveTokenAction>(setUserToken),
 ]);
 
 AppState setLoader(AppState state, SetLoader action) {
@@ -26,12 +22,6 @@ AppState setLoader(AppState state, SetLoader action) {
 AppState setIsLoginError(AppState state, SetIsLoginError action) {
   final AppStateBuilder b = state.toBuilder();
   b..isLoginError = action.isLoginError;
-  return b.build();
-}
-
-AppState setCurrentUser(AppState state, SaveUser action) {
-  final AppStateBuilder b = state.toBuilder();
-  b..currentUser = action.userDetails!.toBuilder();
   return b.build();
 }
 
@@ -75,32 +65,22 @@ void updateSuccessMessageState(AppState state) {
   });
 }
 
-AppState setUser(AppState state, SaveUser action) {
-  final AppStateBuilder b = state.toBuilder();
-  b..currentUser = action.userDetails!.toBuilder();
-  return b.build();
-}
-
-AppState fetchUserNotes(AppState state, SaveDataToGlobalData action) {
+// token dispatch
+AppState setBookLoggedInUser(AppState state, SaveUser action) {
   //print(action.email);
   final AppStateBuilder b = state.toBuilder();
-  //SetAddNotesAction usrNote = SetAddNotesAction(email: action.email, note: action.note);
-  b..userNotesList = action.usrNotes.toBuilder();
-  return b.build();
-}
-
-AppState setBookLoggedInUser(AppState state, BookLoggedInUser action) {
-  //print(action.email);
-  final AppStateBuilder b = state.toBuilder();
-  //SetAddNotesAction usrNote = SetAddNotesAction(email: action.email, note: action.note);
-  b..bookStoreLoggedInUser = action.loggedInBookStoreUser.toBuilder();
+  b..bookStoreLoggedInUser = action.username;
   return b.build();
 }
 
 AppState getBookForTheUser(AppState state, GetBookForTheUsers action) {
-  //print(action.email);
   final AppStateBuilder b = state.toBuilder();
-  //SetAddNotesAction usrNote = SetAddNotesAction(email: action.email, note: action.note);
   b..getUsrBooks = action.booksOfTheUsers.toBuilder();
+  return b.build();
+}
+
+AppState setUserToken(AppState state, SaveTokenAction action) {
+  final AppStateBuilder b = state.toBuilder();
+  b..userToken = action.userToken;
   return b.build();
 }

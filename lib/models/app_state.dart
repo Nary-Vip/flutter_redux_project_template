@@ -28,7 +28,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   AppUser? get currentUser;
 
-  AppNotesJson? get userNotesList;
+  String? get bookStoreLoggedInUser;
 
   //String? get currentUser;
 
@@ -36,11 +36,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isLoading;
 
+  String? get userToken;
+
   int get onMessageCount;
 
-  ApiBookUser get bookStoreLoggedInUser;
-
-  ApiBook get getUsrBooks;
+  BookInfo get getUsrBooks;
 
   String? get errorMessage;
 

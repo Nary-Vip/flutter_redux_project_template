@@ -4,14 +4,16 @@ import 'package:built_value/serializer.dart';
 
 part 'api_book.g.dart';
 
-abstract class ApiBook implements Built<ApiBook, ApiBookBuilder> {
-  factory ApiBook([ApiBookBuilder updates(ApiBookBuilder builder)]) = _$ApiBook;
+abstract class BookInfo implements Built<BookInfo, BookInfoBuilder> {
+  factory BookInfo([BookInfoBuilder updates(BookInfoBuilder builder)]) =
+      _$BookInfo;
 
-  ApiBook._();
+  BookInfo._();
 
+  @BuiltValueField(wireName: 'books')
   BuiltList<BookList>? get listOfBooks;
 
-  static Serializer<ApiBook> get serializer => _$apiBookSerializer;
+  static Serializer<BookInfo> get serializer => _$bookInfoSerializer;
 }
 
 abstract class BookList implements Built<BookList, BookListBuilder> {

@@ -9,14 +9,11 @@ abstract class AccessToken implements Built<AccessToken, AccessTokenBuilder> {
 
   AccessToken._();
 
-
-  @BuiltValueField(wireName: 'access_token')
-  String? get accessToken;
-
+  @BuiltValueField(wireName: 'token')
+  String? get token;
 
   @BuiltValueField(wireName: 'refresh_token')
   String? get refreshToken;
-
 
   @BuiltValueField(wireName: 'expires_in')
   int? get expiresIn;

@@ -15,7 +15,7 @@ abstract class ApiSuccess implements Built<ApiSuccess, ApiSuccessBuilder> {
 
   String? get message;
 
-  AccessToken? get token;
+  String? get token;
 
   @BuiltValueField(wireName: 'customer')
   AppUser? get user;

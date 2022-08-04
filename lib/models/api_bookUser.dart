@@ -3,18 +3,13 @@ import 'package:built_value/serializer.dart';
 
 part 'api_bookUser.g.dart';
 
-abstract class ApiBookUser implements Built<ApiBookUser, ApiBookUserBuilder> {
-  factory ApiBookUser(
-      [ApiBookUserBuilder updates(ApiBookUserBuilder builder)]) = _$ApiBookUser;
+abstract class User implements Built<User, UserBuilder> {
+  factory User([UserBuilder updates(UserBuilder builder)]) = _$User;
 
-  ApiBookUser._();
+  User._();
 
   String? get username;
   String? get password;
-  String? get token;
 
-  set username(String? i) => username = i;
-  set password(String? i) => password = i;
-
-  static Serializer<ApiBookUser> get serializer => _$apiBookUserSerializer;
+  static Serializer<User> get serializer => _$userSerializer;
 }

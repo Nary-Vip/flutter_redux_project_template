@@ -11,15 +11,13 @@ import 'package:personal_pjt/models/models.dart';
 import 'package:personal_pjt/reducers/reducers.dart';
 import 'package:personal_pjt/theme.dart';
 import 'package:personal_pjt/views/auth/login_page.dart';
+import 'package:personal_pjt/views/init_page.dart';
 //import 'package:personal_pjt/views/init_page.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//My imports
-import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   final AppRepository repository = AppRepository(

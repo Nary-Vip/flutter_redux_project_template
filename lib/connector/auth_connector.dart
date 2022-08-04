@@ -1,7 +1,6 @@
 import 'package:personal_pjt/actions/actions.dart';
 import 'package:personal_pjt/models/api_book.dart';
 import 'package:personal_pjt/models/api_bookUser.dart';
-import 'package:personal_pjt/models/app_notes.dart';
 import 'package:personal_pjt/models/app_todo.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:built_value/built_value.dart';
@@ -11,20 +10,17 @@ import 'package:redux/redux.dart';
 
 part 'auth_connector.g.dart';
 
-typedef LoginWithPasswordAction = void Function(String email, String password,
-    ValueChanged<String> onSuccess, ValueChanged<String> onError);
-typedef AppGetNotesAction = void Function(String email);
-typedef AppNotesAction = void Function(String email, Map<String, dynamic> note);
-typedef LoggedInMailConnector = void Function(String email);
-typedef LogOutAction = void Function();
-typedef SetUserMail = void Function(String email);
+typedef LogOutConnector = void Function();
 typedef BookStoreLoggedInUsrDetails = void Function(
-  String? username,
-  String? password,
-  String? token,
+  String username,
+  String password,
   ValueChanged<String> onSuccess,
   ValueChanged<String> onError,
 );
+typedef FetchBookConnector = void Function(String? token);
+typedef PushBooksConnector = void Function(
+    int? bookId, String? bookTitle, String? authorName, String? authorLastName);
+typedef DeleteBookConnector = void Function(int? bookId);
 
 abstract class AuthViewModel
     implements Built<AuthViewModel, AuthViewModelBuilder> {
@@ -38,81 +34,50 @@ abstract class AuthViewModel
     return AuthViewModel((AuthViewModelBuilder b) {
       return b
         ..isInitializing = store.state.isInitializing
-        ..usrNoteList = store.state.userNotesList?.toBuilder()
-        ..setUserMail = (String email) {
-          AppUser user = AppUser();
-          user = user.rebuild((b) => b..email = email);
-          store.dispatch(SaveUser(userDetails: user));
+        ..userToken = store.state.userToken
+        ..deleteBook = (int? id) {
+          store.dispatch(DeleteBookAction(id));
         }
-        ..bookStoreLoggedInUser = store.state.bookStoreLoggedInUser.toBuilder()
-        ..getBooksForTheUsers = store.state.getUsrBooks.toBuilder()
-        ..bookStoreUsrDetails = (String? username,
-            String? password,
-            String? token,
-            ValueChanged<String> onSuccess,
-            ValueChanged<String> onError) {
-          ApiBookUser user = ApiBookUser();
-          user = user.rebuild((b) {
-            b..password = password;
-            b..username = username;
-            b..token = token;
-          });
-          store.dispatch(BookLoggedInUser(user, onError, onSuccess));
-        }
-        ..currentUser = store.state.currentUser?.toBuilder()
-        ..isLoading = store.state.isLoading
-        ..loggedInmail = (String email) {
-          store.dispatch(LoggedInMail(email));
-        }
-        ..getUserNotes = (String email) {
+        ..getUsrBooks = store.state.getUsrBooks.toBuilder()
+        ..pushBookCon = (int? bookId, String? bookTitle, String? authorName,
+            String? authorLastName) {
           store.dispatch(
-            LoggedInMail(email),
-          );
+              PushBooks(bookId, bookTitle, authorName, authorLastName));
         }
-        ..isLoginError = store.state.isLoginError
-        ..loginWithPassword = (String email, String password,
+        ..fetchBooksForTheUsers = (String? token) {
+          store.dispatch(FetchBookForTheUser(token));
+        }
+        ..loginWithPassword = (String username, String password,
             ValueChanged<String> onSuccess, ValueChanged<String> onError) {
           store.dispatch(
-            LoginWithPassword(
-              email: email,
-              password: password,
-              onSuccess: onSuccess,
-              onError: onError,
-            ),
-          );
+              LoginWithPassword(username, password, onError, onSuccess));
         }
-        ..mailAndNotes = (String email, Map<String, dynamic> note) {
-          store.dispatch(SetAddNotesAction(email: email, note: note));
-        }
+        ..bookStoreLoggedInUser = store.state.bookStoreLoggedInUser
+        ..currentUser = store.state.currentUser?.toBuilder()
+        ..isLoading = store.state.isLoading
         ..logOut = () {
           store.dispatch(LogOutUser());
         };
     });
   }
 
-  LoginWithPasswordAction get loginWithPassword;
+  BookStoreLoggedInUsrDetails get loginWithPassword;
 
-  AppNotesJson? get usrNoteList;
+  DeleteBookConnector get deleteBook;
 
-  //Trigger fetch notes by sending the email.
-  AppGetNotesAction get getUserNotes;
+  PushBooksConnector get pushBookCon;
 
-  BookStoreLoggedInUsrDetails get bookStoreUsrDetails;
+  String? get userToken;
 
-  ApiBookUser? get bookStoreLoggedInUser;
+  String? get bookStoreLoggedInUser;
 
-  ApiBook get getBooksForTheUsers;
+  FetchBookConnector get fetchBooksForTheUsers;
 
-  SetUserMail get setUserMail;
+  BookInfo get getUsrBooks;
 
-  LoggedInMailConnector get loggedInmail;
-
-  LogOutAction get logOut;
+  LogOutConnector get logOut;
 
   AppUser? get currentUser;
-
-  //adding an note
-  AppNotesAction get mailAndNotes;
 
   bool get isInitializing;
 

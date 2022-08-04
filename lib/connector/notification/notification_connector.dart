@@ -24,7 +24,7 @@ abstract class NotificationModel
       return b
         ..isInitializing = store.state.isInitializing
         ..isLoading = store.state.isLoading
-        ..currentUser = store.state.currentUser?.toBuilder()
+        //..currentUser = store.state.currentUser?.toBuilder()
         ..errorMessage = store.state.errorMessage
         ..successMessage = store.state.successMessage
         ..onMessageCount = store.state.onMessageCount
@@ -43,7 +43,6 @@ abstract class NotificationModel
   NotificationListAction get notificationListAction;
 
   UpdateNotificationReadStatusAction get updateNotificationReadStatus;
-
 
   AppUser? get currentUser;
 

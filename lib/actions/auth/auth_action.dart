@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:personal_pjt/models/api_book.dart';
-import 'package:personal_pjt/models/api_bookUser.dart';
-import 'package:personal_pjt/models/app_notes.dart';
 import 'package:personal_pjt/models/app_todo.dart';
-import 'package:personal_pjt/models/app_user.dart';
 
 class CheckForUserInPrefs {}
 
 //********************************* login-in ***********************************//
 class LoginWithPassword {
-  LoginWithPassword(
-      {required this.email,
-      required this.password,
-      required this.onSuccess,
-      required this.onError});
+  LoginWithPassword(this.username, this.password, this.onError, this.onSuccess);
 
-  final String email;
-  //final String? mobile;
+  //final User loggedInBookStoreUser;
+  final String username;
   final String password;
   final ValueChanged<String> onSuccess;
   final ValueChanged<String> onError;
 }
 
 class SaveUser {
-  SaveUser({required this.userDetails});
+  final String? username;
+  final String? password;
 
-  final AppUser? userDetails;
+  SaveUser(this.username, this.password);
 }
 
 //***************************** log-out ***************************************//
@@ -106,16 +100,37 @@ class LoggedInUser {
   LoggedInUser(this.email);
 }
 
-class BookLoggedInUser {
-  final ApiBookUser loggedInBookStoreUser;
-  final ValueChanged<String> onSuccess;
-  final ValueChanged<String> onError;
-
-  BookLoggedInUser(this.loggedInBookStoreUser, this.onError, this.onSuccess);
-}
-
 class GetBookForTheUsers {
-  final ApiBook booksOfTheUsers;
+  final BookInfo booksOfTheUsers;
 
   GetBookForTheUsers(this.booksOfTheUsers);
+}
+
+class FetchBookForTheUser {
+  final String? token;
+
+  FetchBookForTheUser(this.token);
+}
+
+//Doubt Use same action for req books with token and save them.
+
+class SaveTokenAction {
+  final String? userToken;
+
+  SaveTokenAction(this.userToken);
+}
+
+class PushBooks {
+  final int? age;
+  final String? bookTitle;
+  final String? authorName;
+  final String? authorLastName;
+
+  PushBooks(this.age, this.bookTitle, this.authorName, this.authorLastName);
+}
+
+class DeleteBookAction {
+  final int? bookId;
+
+  DeleteBookAction(this.bookId);
 }
