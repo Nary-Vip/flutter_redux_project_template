@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_pjt/models/api_book.dart';
+import 'package:personal_pjt/models/api_success.dart';
 import 'package:personal_pjt/models/app_todo.dart';
 
 class CheckForUserInPrefs {}
@@ -16,10 +17,9 @@ class LoginWithPassword {
 }
 
 class SaveUser {
-  final String? username;
-  final String? password;
+  final ApiSuccess? userDetails;
 
-  SaveUser(this.username, this.password);
+  SaveUser(this.userDetails);
 }
 
 //***************************** log-out ***************************************//
@@ -100,37 +100,10 @@ class LoggedInUser {
   LoggedInUser(this.email);
 }
 
-class GetBookForTheUsers {
-  final BookInfo booksOfTheUsers;
-
-  GetBookForTheUsers(this.booksOfTheUsers);
-}
-
-class FetchBookForTheUser {
-  final String? token;
-
-  FetchBookForTheUser(this.token);
-}
-
 //Doubt Use same action for req books with token and save them.
 
 class SaveTokenAction {
   final String? userToken;
 
   SaveTokenAction(this.userToken);
-}
-
-class PushBooks {
-  final int? age;
-  final String? bookTitle;
-  final String? authorName;
-  final String? authorLastName;
-
-  PushBooks(this.age, this.bookTitle, this.authorName, this.authorLastName);
-}
-
-class DeleteBookAction {
-  final int? bookId;
-
-  DeleteBookAction(this.bookId);
 }
