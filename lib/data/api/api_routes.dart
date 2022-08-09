@@ -4,19 +4,19 @@ class ApiRoutes {
 //  https://jsonplaceholder.typicode.com/todos/
   static const ApiConfig debugConfig = ApiConfig(
     scheme: 'https',
-    host: 'api.uat.finobuddy.com',
+    host: 'api.spotify.com',
 //    port: 443,
     scope: scope,
   );
 
   static const ApiConfig prodConfig = ApiConfig(
     scheme: 'https',
-    host: 'example.com',
+    host: 'api.spotify.com',
     port: 443,
     scope: scope,
   );
 
   //Scope
   static const String debugScope = '';
-  static const String scope = '/api/v1';
+  static const String scope = '/v1';
 }

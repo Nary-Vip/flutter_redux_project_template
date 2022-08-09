@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:personal_pjt/actions/auth/auth_action.dart';
 import 'package:personal_pjt/data/api/api_routes.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-
+  await dotenv.load(fileName: ".env");
   final AppRepository repository = AppRepository(
       preferencesClient: PreferencesClient(prefs: prefs),
       config: ApiRoutes.debugConfig);

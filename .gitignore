@@ -49,3 +49,6 @@ app.*.map.json
 *.g.dart
 #android/ezpop_private_key.jks
 #android/settings_aar.gradle
+
+#Environment Variable
+.env
