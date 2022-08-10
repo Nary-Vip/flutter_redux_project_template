@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:personal_pjt/data/services/auth/auth_service.dart';
 import 'package:personal_pjt/data/services/notification/notification_service.dart';
+import 'package:personal_pjt/data/services/search/search_service.dart';
 import 'package:personal_pjt/models/app_user.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_pjt/data/api/api_client.dart';
@@ -16,6 +17,7 @@ class AppRepository {
     apiClient = ApiClient(config: config!);
     services = <ApiService>[
       AuthService(client: apiClient!),
+      SearchService(client: apiClient!),
       NotificationService(client: apiClient!),
     ];
   }

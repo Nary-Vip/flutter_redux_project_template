@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:personal_pjt/models/search_track_artists.dart';
@@ -15,11 +16,11 @@ abstract class SearchTrackAlbum
   SearchTrackAlbum._();
 
   String? get albumType;
-  List<SearchTrackArtists>? get artists;
+  BuiltList<SearchTrackArtists>? get artists;
   SearchTrackExternalUrls? get externalUrls;
   String? get href;
   String? get id;
-  List<SearchTrackImages>? get images;
+  BuiltList<SearchTrackImages>? get images;
   String? get name;
   String? get releaseDate;
   String? get releaseDatePrecision;

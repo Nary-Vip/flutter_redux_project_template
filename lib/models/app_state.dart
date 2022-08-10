@@ -1,7 +1,10 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:flutter/material.dart' hide Builder;
+import 'package:personal_pjt/models/genre_list.dart';
 import 'package:personal_pjt/models/models.dart';
+import 'package:personal_pjt/models/search_track.dart';
+import 'package:personal_pjt/models/search_track_result.dart';
 
 part 'app_state.g.dart';
 
@@ -29,6 +32,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isLoading;
 
+  String? get accessToken;
+
   int get onMessageCount;
 
   String? get errorMessage;
@@ -36,6 +41,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String? get successMessage;
 
   Pagination? get pagination;
+
+  SearchTrackResult? get searchResults;
+
+  GenreList? get genreList;
 
   BuiltList<Notifications>? get notificationList;
 }

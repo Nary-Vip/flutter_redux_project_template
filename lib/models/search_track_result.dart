@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:personal_pjt/models/search_track_items.dart';
@@ -13,7 +14,7 @@ abstract class SearchTrackResult
   SearchTrackResult._();
 
   String? get href;
-  List<SearchTrackItem>? get items;
+  BuiltList<SearchTrackItem>? get items;
   int? get limit;
   String? get next;
   int? get offset;

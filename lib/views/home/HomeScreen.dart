@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:personal_pjt/views/screens/LandingPage.dart';
 import 'package:personal_pjt/views/screens/Library.dart';
 import 'package:personal_pjt/views/screens/PremiumPage.dart';
+import 'package:personal_pjt/views/screens/SearchAndGenre.dart';
 import 'package:personal_pjt/views/screens/SearchPage.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   static const List _pages = [
     LandingPage(),
-    SearchPage(),
+    SearchAndGenre(),
     LibraryPage(),
     PremiumPage()
   ];

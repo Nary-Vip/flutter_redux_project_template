@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:personal_pjt/models/models.dart';
+import 'package:personal_pjt/models/search_track_result.dart';
 
 part 'api_success.g.dart';
 
@@ -19,6 +20,8 @@ abstract class ApiSuccess implements Built<ApiSuccess, ApiSuccessBuilder> {
 
   @BuiltValueField(wireName: 'customer')
   AppUser? get user;
+
+  SearchTrackResult? get tracks;
 
 //***************************** pagination ***********************************//
   Pagination? get meta;

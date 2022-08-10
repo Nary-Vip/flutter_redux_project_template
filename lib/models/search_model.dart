@@ -19,5 +19,7 @@ abstract class SearchModel implements Built<SearchModel, SearchModelBuilder> {
 
   int? get offset;
 
+  String? get token;
+
   static Serializer<SearchModel> get serializer => _$searchModelSerializer;
 }

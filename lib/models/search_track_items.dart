@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:personal_pjt/models/search_track_album.dart';
@@ -16,7 +17,7 @@ abstract class SearchTrackItem
   SearchTrackItem._();
 
   SearchTrackAlbum? get album;
-  List<SearchTrackArtists>? get artists;
+  BuiltList<SearchTrackArtists>? get artists;
   int? get discNumber;
   int? get durationMs;
   bool? get explicit;

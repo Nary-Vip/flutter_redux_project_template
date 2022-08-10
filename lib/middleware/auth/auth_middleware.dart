@@ -26,16 +26,20 @@ class AuthMiddleware {
       NextDispatcher next) async {
     next(action);
     try {
-      final AppUser? user = await repository.getUserFromPrefs();
+      // final AppUser? user = await repository.getUserFromPrefs();
 
-      if (user != null) {
+      //Trigger AccessToken fetch
+      store.dispatch(TriggerAuthentication());
+
+      // if (user != null) {
         store.dispatch(SetInitializer(false));
-        store.dispatch(SaveUser(userDetails: user));
-      } else {
-        store.dispatch(SetInitializer(false));
-        store.dispatch(SaveUser(userDetails: null));
-      }
+        // store.dispatch(SaveUser(userDetails: user));
+      // } else {
+      //   store.dispatch(SetInitializer(false));
+      //   store.dispatch(SaveUser(userDetails: null));
+      // }
     } catch (e) {
+      print(e);
       return;
     }
   }

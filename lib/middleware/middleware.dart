@@ -1,4 +1,5 @@
 import 'package:personal_pjt/data/app_repository.dart';
+import 'package:personal_pjt/middleware/search/search_middleware.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:personal_pjt/middleware/auth/auth_middleware.dart';
 import 'package:redux/redux.dart';
@@ -14,4 +15,5 @@ EpicMiddleware<AppState> epicMiddleware(AppRepository repository) =>
 List<Middleware<AppState>> middleware(AppRepository repository) =>
     <List<Middleware<AppState>>>[
       AuthMiddleware(repository: repository).createAuthMiddleware(),
+      SearchMiddleware(repository: repository).createAuthMiddleware(),
     ].expand((List<Middleware<AppState>> list) => list).toList();
