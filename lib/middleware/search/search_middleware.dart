@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:personal_pjt/data/app_repository.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:personal_pjt/models/search_track_result.dart';
+import 'package:personal_pjt/models/user_profile.dart';
 import 'package:redux/redux.dart';
 import 'package:http/http.dart' as http;
 import '../../actions/search/spotify_actions.dart';
@@ -18,8 +19,68 @@ class SearchMiddleware {
   List<Middleware<AppState>> createAuthMiddleware() {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, UserQueryAction>(userQueryAction),
-      TypedMiddleware<AppState, TriggerAuthentication>(triggerAuthentication)
+      TypedMiddleware<AppState, TriggerAuthentication>(triggerAuthentication),
+      TypedMiddleware<AppState, FetchAvailableGenre>(fetchAvailableGenre),
+      TypedMiddleware<AppState, FetchLatestAlbums>(fetchLatestAlbums),
+      TypedMiddleware<AppState, FetchPlaylistAction>(fetchPlaylists),
+      TypedMiddleware<AppState, FetchUserProfile>(fetchUserProfile)
     ];
+  }
+
+  void fetchLatestAlbums(Store<AppState> store, FetchLatestAlbums action,
+      NextDispatcher next) async {
+    print("Fetching Albums");
+    try {
+      final ApiSuccess? response =
+          await searchService.fetchLatestAlbums(store.state.accessToken!);
+
+      store.dispatch(SaveFetchedLatestAlbums(response!.albumList));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void fetchPlaylists(Store<AppState> store, FetchPlaylistAction action,
+      NextDispatcher next) async {
+    print("Fetching playlist");
+    try {
+      final ApiSuccess? response =
+          await searchService.fetchPlaylist(store.state.accessToken!);
+
+      store.dispatch(SaveFetchedPlaylist(response!.playlists!));
+      print(response.playlists);
+      print(store.state.saveFetchedPlaylist);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void fetchUserProfile(Store<AppState> store, FetchUserProfile action,
+      NextDispatcher next) async {
+    print("Fetching User Profile");
+    try {
+      final UserProfile? response =
+          await searchService.fetchUserProfile(store.state.accessToken!);
+
+      store.dispatch(SaveFetchedUserProfile(response!));
+
+      print("Userrr profile ${store.state.userProfile}");
+    } catch (e) {
+      print("errorrr $e");
+    }
+  }
+
+  void fetchAvailableGenre(Store<AppState> store, FetchAvailableGenre action,
+      NextDispatcher next) async {
+    print("Fetching Albums");
+    try {
+      final ApiSuccess? response =
+          await searchService.fetchGenre(store.state.accessToken!);
+
+      store.dispatch(SaveFetchedGenre(response!.genreList!));
+    } catch (e) {
+      print(e);
+    }
   }
 
   void userQueryAction(Store<AppState> store, UserQueryAction action,
@@ -28,7 +89,7 @@ class SearchMiddleware {
       print("Action nnnnnn ${action.userQuery}");
       final SearchModelBuilder obj = SearchModel().toBuilder();
       obj
-        ..limit = 10
+        ..limit = 20
         ..market = "IN"
         ..offset = 0
         ..q = action.userQuery

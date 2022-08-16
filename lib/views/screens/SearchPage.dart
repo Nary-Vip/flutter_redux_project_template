@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
 
 class SearchPage extends StatefulWidget {
@@ -26,10 +27,12 @@ class _SearchPageState extends State<SearchPage> {
                     height: MediaQuery.of(context).size.height * 0.1,
                     child: Text(
                       "Search",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                          color: Colors.white),
+                      style: GoogleFonts.adventPro(
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
@@ -38,6 +41,7 @@ class _SearchPageState extends State<SearchPage> {
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.1,
                     child: TextField(
+                      autofocus: true,
                       controller: _searchController,
                       decoration: InputDecoration(
                         filled: true,
@@ -60,31 +64,55 @@ class _SearchPageState extends State<SearchPage> {
                 (model.searchResults != null)
                     ? Expanded(
                         child: ListView.builder(
-                        itemCount: model.searchResults!.items!.length,
-                        itemBuilder: (BuildContext context, index) {
-                          return ListTile(
-                              subtitle: Text(
-                                "${model.searchResults!.items![index].artists![0].name}",
-                                style: TextStyle(color: Colors.grey),
+                          itemCount: model.searchResults!.items!.length,
+                          itemBuilder: (BuildContext context, index) {
+                            return Padding(
+                              padding: EdgeInsets.all(10),
+                              child: ListTile(
+                                subtitle: Text(
+                                  "${model.searchResults!.items![index].artists![0].name}",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                leading: Image.network(
+                                  "${model.searchResults!.items![index].album!.images![0].url}",
+                                ),
+                                title: Text(
+                                  "${model.searchResults!.items![index].name}",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
-                              leading: Image.network(
-                                "${model.searchResults!.items![index].album!.images![0].url}",
-                              ),
-                              title: Text(
-                                "${model.searchResults!.items![index].name}",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ));
-                        },
-                      ))
+                            );
+                          },
+                        ),
+                      )
                     : Padding(
                         padding: EdgeInsets.fromLTRB(
                             0, MediaQuery.of(context).size.height * 0.2, 0, 0),
                         child: Center(
-                          child: Text(
-                            "Search your favourite songs",
-                            style: TextStyle(fontSize: 26, color: Colors.white),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Play what you love",
+                                style: GoogleFonts.aBeeZee(
+                                  textStyle: TextStyle(
+                                      color: Colors.white, fontSize: 24),
+                                ),
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.02,
+                              ),
+                              Text(
+                                "Search for artists, songs, podcasts, and more.",
+                                maxLines: 2,
+                                style: GoogleFonts.aBeeZee(
+                                  textStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 12),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

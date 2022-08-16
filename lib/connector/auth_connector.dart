@@ -1,10 +1,11 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:personal_pjt/actions/actions.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:flutter/material.dart' hide Builder;
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:personal_pjt/models/search_track.dart';
 import 'package:personal_pjt/models/search_track_result.dart';
+import 'package:personal_pjt/models/user_profile.dart';
 import 'package:redux/redux.dart';
 
 part 'auth_connector.g.dart';
@@ -15,6 +16,9 @@ typedef SearchPageQueryConnector = void Function(String query);
 typedef LogOutAction = void Function();
 typedef AuthenticationConnector = void Function();
 typedef FetchAvailableGenreConnector = void Function();
+typedef FetchLatestAlbumsConnector = void Function();
+typedef FetchPlaylist = void Function();
+typedef FetchUserProfileConnector = void Function();
 
 abstract class AuthViewModel
     implements Built<AuthViewModel, AuthViewModelBuilder> {
@@ -40,8 +44,21 @@ abstract class AuthViewModel
           store.dispatch(UserQueryAction(userQuery: query));
         }
         ..fetchAvailableGenre = () {
-          store.dispatch(FetchAvailableGenre);
+          store.dispatch(FetchAvailableGenre());
         }
+        ..fetchLatestAlbums = () {
+          store.dispatch(FetchLatestAlbums());
+        }
+        ..latestAlbumsList = store.state.latestAlbumsList?.toBuilder()
+        ..fetchPlaylist = () {
+          store.dispatch(FetchPlaylistAction());
+        }
+        ..fetchUserProfile = () {
+          store.dispatch(FetchUserProfile());
+        }
+        ..userProfile = store.state.userProfile?.toBuilder()
+        ..saveFetchedPlaylist = store.state.saveFetchedPlaylist?.toBuilder()
+        ..genreList = store.state.genreList?.toBuilder()
         ..searchResults = store.state.searchResults?.toBuilder()
         ..accessToken = store.state.accessToken
         ..logOut = () {
@@ -51,6 +68,10 @@ abstract class AuthViewModel
   }
 
   LoginWithPasswordAction get loginWithPassword;
+
+  FetchPlaylist? get fetchPlaylist;
+
+  SearchTrackResult? get saveFetchedPlaylist;
 
   LogOutAction get logOut;
 
@@ -64,9 +85,19 @@ abstract class AuthViewModel
 
   String? get accessToken;
 
+  SearchTrackResult? get latestAlbumsList;
+
   SearchTrackResult? get searchResults;
 
+  UserProfile? get userProfile;
+
+  FetchLatestAlbumsConnector? get fetchLatestAlbums;
+
   FetchAvailableGenreConnector? get fetchAvailableGenre;
+
+  BuiltList<String>? get genreList;
+
+  FetchUserProfileConnector? get fetchUserProfile;
 }
 
 class AuthConnector extends StatelessWidget {

@@ -12,7 +12,9 @@ abstract class SearchTrackArtists
 
   SearchTrackArtists._();
 
+  @BuiltValueField(wireName: 'external_urls')
   SearchTrackExternalUrls? get externalUrls;
+
   String? get href;
   String? get id;
   String? get name;

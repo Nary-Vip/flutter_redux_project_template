@@ -7,6 +7,8 @@ import 'package:personal_pjt/models/models.dart';
 import 'package:personal_pjt/views/home/home_page.dart';
 import 'package:redux/redux.dart';
 
+bool tokenAvailable = false;
+
 class AuthMiddleware {
   AuthMiddleware({required this.repository})
       : authService = repository.getService<AuthService>() as AuthService;
@@ -29,11 +31,24 @@ class AuthMiddleware {
       // final AppUser? user = await repository.getUserFromPrefs();
 
       //Trigger AccessToken fetch
+      // try {
       store.dispatch(TriggerAuthentication());
+      // } catch (e) {
+      //   tokenAvailable = true;
+      // }
+      // if (!tokenAvailable) {
+      //   store.dispatch(FetchLatestAlbums());
+      //   store.dispatch(FetchPlaylistAction());
+      // }
 
+      Future.delayed(Duration(seconds: 1), () {
+        store.dispatch(FetchLatestAlbums());
+        store.dispatch(FetchPlaylistAction());
+        store.dispatch(FetchUserProfile());
+      });
       // if (user != null) {
-        store.dispatch(SetInitializer(false));
-        // store.dispatch(SaveUser(userDetails: user));
+      store.dispatch(SetInitializer(false));
+      // store.dispatch(SaveUser(userDetails: user));
       // } else {
       //   store.dispatch(SetInitializer(false));
       //   store.dispatch(SaveUser(userDetails: null));

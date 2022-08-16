@@ -1,10 +1,9 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:flutter/material.dart' hide Builder;
-import 'package:personal_pjt/models/genre_list.dart';
 import 'package:personal_pjt/models/models.dart';
-import 'package:personal_pjt/models/search_track.dart';
 import 'package:personal_pjt/models/search_track_result.dart';
+import 'package:personal_pjt/models/user_profile.dart';
 
 part 'app_state.g.dart';
 
@@ -44,7 +43,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   SearchTrackResult? get searchResults;
 
-  GenreList? get genreList;
+  BuiltList<String>? get genreList;
+
+  SearchTrackResult? get latestAlbumsList;
+
+  SearchTrackResult? get saveFetchedPlaylist;
 
   BuiltList<Notifications>? get notificationList;
+
+  UserProfile? get userProfile;
 }

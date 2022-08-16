@@ -12,7 +12,10 @@ class InitPage extends StatelessWidget {
         if (model.isInitializing) {
           return AppLoader();
         }
-        return model.currentUser != null ? LoginPage() : HomeScreen();
+
+        return model.currentUser != null
+            ? LoginPage()
+            : HomeScreen(model: model);
       },
     );
   }

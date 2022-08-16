@@ -258,15 +258,15 @@ class ApiClient extends io_client.IOClient {
 
     log.d('''
 
-    ____________________________________
-   URL: ${response.request!.url}
-    Request-method: ${method.toString()}
-    HEADERS: ${response.request!.headers}
-    REQUEST-BODY : ${requestBody?.toString()}
-    RESPONSE : ${response.body}
-    STATUS-CODE : ${response.statusCode}
-    ____________________________________
-    ''');
+      ____________________________________
+     URL: ${response.request!.url}
+      Request-method: ${method.toString()}
+      HEADERS: ${response.request!.headers}
+      REQUEST-BODY : ${requestBody?.toString()}
+      RESPONSE : ${response.body}
+      STATUS-CODE : ${response.statusCode}
+      ____________________________________
+      ''');
 
     return ApiResponse<R>.from(response, responseKey, fullType: fullType);
   }
