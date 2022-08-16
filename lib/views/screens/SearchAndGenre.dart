@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
 import 'package:personal_pjt/views/screens/SearchPage.dart';
 
+import '../../i18n/localisation_service.dart';
+
 class SearchAndGenre extends StatefulWidget {
   const SearchAndGenre({Key? key}) : super(key: key);
 
@@ -65,7 +67,8 @@ class _SearchAndGenreState extends State<SearchAndGenre> {
                           icon: Icon(Icons.search),
                           color: Colors.grey,
                         ),
-                        hintText: "Artists, songs, or podcasts",
+                        hintText: LocalisationService.of(context)
+                            .translate("SearchHint")!,
                         hintStyle: TextStyle(color: Colors.grey),
                       ),
                     ),
@@ -75,7 +78,7 @@ class _SearchAndGenreState extends State<SearchAndGenre> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(0, 5, 0, 30),
                     child: Text(
-                      "Browse all",
+                      LocalisationService.of(context).translate("Browse_All")!,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 22,

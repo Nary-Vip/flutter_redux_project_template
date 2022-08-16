@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
-import 'package:personal_pjt/views/screens/PremiumPage.dart';
+import 'package:personal_pjt/i18n/localisation_service.dart';
 import 'package:personal_pjt/views/screens/ProfilePage.dart';
 
 class LandingPage extends StatefulWidget {
@@ -34,7 +34,8 @@ class _LandingPageState extends State<LandingPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              "Good Morning",
+                              LocalisationService.of(context)
+                              .translate("Greeting")!,
                               style: GoogleFonts.aBeeZee(
                                 textStyle: TextStyle(
                                     color: Colors.white, fontSize: 24),
@@ -82,7 +83,8 @@ class _LandingPageState extends State<LandingPage> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(25, 0, 15, 0),
                         child: Text(
-                          "Latest Albums",
+                          LocalisationService.of(context)
+                              .translate("Title_Albums")!,
                           textAlign: TextAlign.start,
                           style: GoogleFonts.aBeeZee(
                             textStyle:
@@ -161,7 +163,8 @@ class _LandingPageState extends State<LandingPage> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(25, 0, 15, 0),
                         child: Text(
-                          "Featured playlist",
+                          LocalisationService.of(context)
+                              .translate("Featured_Playlist")!,
                           style: GoogleFonts.aBeeZee(
                             textStyle:
                                 TextStyle(color: Colors.white, fontSize: 24),

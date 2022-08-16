@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
+import 'package:personal_pjt/i18n/localisation_service.dart';
 import 'package:personal_pjt/views/screens/LandingPage.dart';
 import 'package:personal_pjt/views/screens/Library.dart';
 import 'package:personal_pjt/views/screens/PremiumPage.dart';
 import 'package:personal_pjt/views/screens/SearchAndGenre.dart';
+
+//import 'package:personal_pjt/i18n/localisation_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.model}) : super(key: key);
@@ -31,13 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
         return Scaffold(
           body: _pages[_selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
-            items: const [
+            items: [
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.home,
                   color: Colors.white,
                 ),
-                label: "Home",
+                //label: "Home",
+                label: LocalisationService.of(context).translate("Nav_Home"),
                 backgroundColor: Colors.black,
               ),
               BottomNavigationBarItem(
@@ -45,14 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     Icons.search,
                     color: Colors.white,
                   ),
-                  label: "Search",
+                  label:
+                      LocalisationService.of(context).translate("Nav_Search"),
                   backgroundColor: Colors.black),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.library_books_outlined,
                     color: Colors.white,
                   ),
-                  label: "Library",
+                  label:
+                      LocalisationService.of(context).translate("Nav_Library"),
                   backgroundColor: Colors.black),
               BottomNavigationBarItem(
                   icon: Icon(
@@ -60,7 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white,
                     size: 32,
                   ),
-                  label: "Premium",
+                  label:
+                      LocalisationService.of(context).translate("Nav_Premium"),
                   backgroundColor: Colors.black),
             ],
             unselectedFontSize: 12,

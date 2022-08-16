@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
+import 'package:personal_pjt/i18n/localisation_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -96,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       Text(
-                        "FOLLOWERS",
+                        LocalisationService.of(context).translate("Followers")!,
                         style: TextStyle(color: Colors.grey, fontSize: 10),
                       )
                     ],
@@ -108,7 +109,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Center(
                 child: Text(
-                  "No recent Activity",
+                  LocalisationService.of(context)
+                      .translate("NoRecentActivity")!,
                   style: GoogleFonts.inder(
                     textStyle: TextStyle(
                         color: Colors.white,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
+import 'package:personal_pjt/i18n/localisation_service.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _SearchPageState extends State<SearchPage> {
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.1,
                     child: Text(
-                      "Search",
+                      LocalisationService.of(context).translate("Nav_Search")!,
                       style: GoogleFonts.adventPro(
                         textStyle: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -94,7 +95,8 @@ class _SearchPageState extends State<SearchPage> {
                           child: Column(
                             children: [
                               Text(
-                                "Play what you love",
+                                LocalisationService.of(context)
+                                    .translate("Listen")!,
                                 style: GoogleFonts.aBeeZee(
                                   textStyle: TextStyle(
                                       color: Colors.white, fontSize: 24),
@@ -105,7 +107,8 @@ class _SearchPageState extends State<SearchPage> {
                                     MediaQuery.of(context).size.height * 0.02,
                               ),
                               Text(
-                                "Search for artists, songs, podcasts, and more.",
+                                LocalisationService.of(context)
+                                    .translate("ArtistsSongsPodcasts")!,
                                 maxLines: 2,
                                 style: GoogleFonts.aBeeZee(
                                   textStyle: TextStyle(

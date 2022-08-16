@@ -28,31 +28,14 @@ class AuthMiddleware {
       NextDispatcher next) async {
     next(action);
     try {
-      // final AppUser? user = await repository.getUserFromPrefs();
-
-      //Trigger AccessToken fetch
-      // try {
       store.dispatch(TriggerAuthentication());
-      // } catch (e) {
-      //   tokenAvailable = true;
-      // }
-      // if (!tokenAvailable) {
-      //   store.dispatch(FetchLatestAlbums());
-      //   store.dispatch(FetchPlaylistAction());
-      // }
 
       Future.delayed(Duration(seconds: 1), () {
         store.dispatch(FetchLatestAlbums());
         store.dispatch(FetchPlaylistAction());
         store.dispatch(FetchUserProfile());
       });
-      // if (user != null) {
       store.dispatch(SetInitializer(false));
-      // store.dispatch(SaveUser(userDetails: user));
-      // } else {
-      //   store.dispatch(SetInitializer(false));
-      //   store.dispatch(SaveUser(userDetails: null));
-      // }
     } catch (e) {
       print(e);
       return;
@@ -62,7 +45,6 @@ class AuthMiddleware {
   void loginWithPassword(Store<AppState> store, LoginWithPassword action,
       NextDispatcher next) async {
     try {
-      String registrationToken = '';
       store.dispatch(new SetLoader(true));
       final Map<String, dynamic> objToApi = <String, dynamic>{
         'customer': <String, String>{

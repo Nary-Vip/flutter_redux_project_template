@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:personal_pjt/data/app_repository.dart';
 import 'package:personal_pjt/data/preference_client.dart';
+import 'package:personal_pjt/i18n/localisation_service.dart';
 import 'package:personal_pjt/middleware/middleware.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:personal_pjt/reducers/reducers.dart';
@@ -70,9 +71,12 @@ class _MyAppState extends State<MyApp> {
       store: store,
       child: MaterialApp(
         navigatorKey: store.state.navigator,
-        title: 'MyApp',
+        title: 'Spotify',
         theme: themeData,
         home: InitPage(),
+        localeResolutionCallback: LocalisationService.localeResolutionCallBack,
+        supportedLocales: LocalisationService.supportedLocales,
+        localizationsDelegates: LocalisationService.localizationsDelegate,
         debugShowCheckedModeBanner: false,
       ),
     );

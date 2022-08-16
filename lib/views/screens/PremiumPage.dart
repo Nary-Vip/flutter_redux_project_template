@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:personal_pjt/i18n/localisation_service.dart';
 
 class PremiumPage extends StatefulWidget {
   const PremiumPage({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _PremiumPageState extends State<PremiumPage> {
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Text(
-                    "Try Premium free for 1 month",
+                    LocalisationService.of(context).translate("TryPremium")!,
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     style: GoogleFonts.inter(

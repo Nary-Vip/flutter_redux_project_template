@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:personal_pjt/i18n/localisation_service.dart';
 import 'package:personal_pjt/views/screens/PremiumPage.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -41,7 +40,7 @@ class _LibraryPageState extends State<LibraryPage> {
                   ),
                 ),
                 Text(
-                  "Your Library",
+                  LocalisationService.of(context).translate("Nav_Library")!,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
