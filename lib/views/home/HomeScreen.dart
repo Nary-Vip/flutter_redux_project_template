@@ -78,9 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.white,
             onTap: (int index) {
-              if (index == 0) {
-                //model.fetchLatestAlbums!();
-
+              if (index == 2) {
+                model.fetchUserSavedAlbum();
               }
               if (index == 1) {
                 model.fetchAvailableGenre!();
