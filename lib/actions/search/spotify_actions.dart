@@ -68,7 +68,12 @@ class SaveFetchedSavedAlbums {
 }
 
 class DeleteSavedAlbum {
-  final String id;
+  DeleteSavedAlbum({this.id});
+  final String? id;
+}
 
-  DeleteSavedAlbum(this.id);
+class SaveAnUserAlbum {
+  final String? id;
+
+  SaveAnUserAlbum({this.id});
 }

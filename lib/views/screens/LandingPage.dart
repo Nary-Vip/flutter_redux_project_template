@@ -104,55 +104,86 @@ class _LandingPageState extends State<LandingPage> {
                             scrollDirection: Axis.horizontal,
                             itemCount: model.latestAlbumsList!.items!.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Column(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(50),
-                                      child: Image.network(
-                                        model.latestAlbumsList!.items![index]
-                                            .images![0].url!,
-                                        height: 100,
-                                        width: 100,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(7),
-                                      child: Text(
-                                        (model.latestAlbumsList!.items![index]
-                                                    .name!.length <=
-                                                12)
-                                            ? model.latestAlbumsList!
-                                                .items![index].name!
-                                            : model.latestAlbumsList!
-                                                .items![index].name!
-                                                .replaceRange(
-                                                    11,
-                                                    model
-                                                        .latestAlbumsList!
-                                                        .items![index]
-                                                        .name!
-                                                        .length,
-                                                    '...'),
-                                        style: GoogleFonts.alice(
-                                          textStyle: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
+                              return GestureDetector(
+                                onLongPress: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text("Save to your library?"),
+                                          content: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                primary: Colors.black),
+                                            child: Text(
+                                              "SAVE",
+                                              style: GoogleFonts.aBeeZee(
+                                                textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              model.saveAnUserAlbum(model
+                                                  .latestAlbumsList!
+                                                  .items![index]
+                                                  .id!);
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: Column(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Image.network(
+                                          model.latestAlbumsList!.items![index]
+                                              .images![0].url!,
+                                          height: 100,
+                                          width: 100,
+                                          fit: BoxFit.fill,
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      model.latestAlbumsList!.items![index]
-                                          .artists![0].name!,
-                                      style: GoogleFonts.abel(
-                                        textStyle: TextStyle(
-                                            color: Colors.grey, fontSize: 12),
+                                      Padding(
+                                        padding: EdgeInsets.all(7),
+                                        child: Text(
+                                          (model.latestAlbumsList!.items![index]
+                                                      .name!.length <=
+                                                  12)
+                                              ? model.latestAlbumsList!
+                                                  .items![index].name!
+                                              : model.latestAlbumsList!
+                                                  .items![index].name!
+                                                  .replaceRange(
+                                                      11,
+                                                      model
+                                                          .latestAlbumsList!
+                                                          .items![index]
+                                                          .name!
+                                                          .length,
+                                                      '...'),
+                                          style: GoogleFonts.alice(
+                                            textStyle: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      Text(
+                                        model.latestAlbumsList!.items![index]
+                                            .artists![0].name!,
+                                        style: GoogleFonts.abel(
+                                          textStyle: TextStyle(
+                                              color: Colors.grey, fontSize: 12),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },

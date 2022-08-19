@@ -26,7 +26,9 @@ class SearchMiddleware {
       TypedMiddleware<AppState, FetchLatestAlbums>(fetchLatestAlbums),
       TypedMiddleware<AppState, FetchPlaylistAction>(fetchPlaylists),
       TypedMiddleware<AppState, FetchUserProfile>(fetchUserProfile),
-      TypedMiddleware<AppState, FetchUserSavedAlbum>(fetchUserSavedAlbum)
+      TypedMiddleware<AppState, FetchUserSavedAlbum>(fetchUserSavedAlbum),
+      TypedMiddleware<AppState, DeleteSavedAlbum>(deleteSavedAlbum),
+      TypedMiddleware<AppState, SaveAnUserAlbum>(saveAnUserAlbum)
     ];
   }
 
@@ -72,13 +74,24 @@ class SearchMiddleware {
 
   void deleteSavedAlbum(Store<AppState> store, DeleteSavedAlbum action,
       NextDispatcher next) async {
-    print("Fetching User albums");
+    print("Deleting album");
     try {
       String? token = dotenv.env['TEMP_LIB_TOKEN'];
       final LibraryAlbumResult? response =
-          await searchService.fetchUserSavedAlbum(token!);
-      store.dispatch(SaveFetchedSavedAlbums(response!));
+          await searchService.deleteSavedAlbum(token!, action.id!);
       print("Userrrrr album ${store.state.userSavedAlbums}");
+    } catch (e) {
+      print("Errorr $e");
+    }
+  }
+
+  void saveAnUserAlbum(Store<AppState> store, SaveAnUserAlbum action,
+      NextDispatcher next) async {
+    print("saving the album ${action.id}");
+    try {
+      String? token = dotenv.env['TEMP_LIB_TOKEN'];
+      final LibraryAlbumResult? response =
+          await searchService.saveAnUserAlbum(token!, action.id!);
     } catch (e) {
       print("Errorr $e");
     }

@@ -103,7 +103,36 @@ class _LibraryPageState extends State<LibraryPage> {
                           itemCount: model.userSavedAlbums!.items!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
-                              onLongPress: () {},
+                              onLongPress: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Delete from library?"),
+                                        content: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.black),
+                                          child: Text(
+                                            "DELETE",
+                                            style: GoogleFonts.aBeeZee(
+                                              textStyle: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            model.deleteSavedAlbum(model
+                                                .userSavedAlbums!
+                                                .items![index]
+                                                .album!
+                                                .id!);
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      );
+                                    });
+                                print("Long press");
+                              },
                               child: Column(
                                 children: [
                                   ClipRRect(

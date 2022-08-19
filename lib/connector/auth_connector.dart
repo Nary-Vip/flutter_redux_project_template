@@ -20,6 +20,8 @@ typedef FetchAvailableGenreConnector = void Function();
 typedef FetchLatestAlbumsConnector = void Function();
 typedef FetchPlaylist = void Function();
 typedef FetchUserProfileConnector = void Function();
+typedef DeleteSavedAlbumConnector = void Function(String id);
+typedef SaveAnUserAlbumConnector = void Function(String id);
 
 abstract class AuthViewModel
     implements Built<AuthViewModel, AuthViewModelBuilder> {
@@ -57,6 +59,12 @@ abstract class AuthViewModel
         ..fetchUserProfile = () {
           store.dispatch(FetchUserProfile());
         }
+        ..deleteSavedAlbum = (String id) {
+          store.dispatch(DeleteSavedAlbum(id: id));
+        }
+        ..saveAnUserAlbum = (String? id) {
+          store.dispatch(SaveAnUserAlbum(id: id));
+        }
         ..userProfile = store.state.userProfile?.toBuilder()
         ..userSavedAlbums = store.state.userSavedAlbums?.toBuilder()
         ..saveFetchedPlaylist = store.state.saveFetchedPlaylist?.toBuilder()
@@ -70,6 +78,10 @@ abstract class AuthViewModel
   }
 
   LoginWithPasswordAction get loginWithPassword;
+
+  DeleteSavedAlbumConnector get deleteSavedAlbum;
+
+  SaveAnUserAlbumConnector get saveAnUserAlbum;
 
   FetchPlaylist? get fetchPlaylist;
 

@@ -138,4 +138,23 @@ class SearchService extends ApiService {
       throw res.error;
     }
   }
+
+  Future<LibraryAlbumResult?> saveAnUserAlbum(String token, String id) async {
+    final ApiResponse<LibraryAlbumResult> res =
+        await client!.callJsonApi<LibraryAlbumResult>(
+      method: Method.PUT,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+      queryParams: {"ids": "$id"},
+      path: '/me/albums',
+    );
+    if (res.isSuccess) {
+      return res.data!;
+    } else {
+      throw res.error;
+    }
+  }
 }
