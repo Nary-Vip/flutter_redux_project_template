@@ -1,7 +1,7 @@
-import 'package:personal_pjt/data/app_repository.dart';
-import 'package:personal_pjt/middleware/search/search_middleware.dart';
-import 'package:personal_pjt/models/models.dart';
-import 'package:personal_pjt/middleware/auth/auth_middleware.dart';
+import 'package:spotify/data/app_repository.dart';
+import 'package:spotify/middleware/search/search_middleware.dart';
+import 'package:spotify/models/models.dart';
+import 'package:spotify/middleware/auth/auth_middleware.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
 

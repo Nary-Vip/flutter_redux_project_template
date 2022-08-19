@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:personal_pjt/connector/auth_connector.dart';
-import 'package:personal_pjt/i18n/localisation_service.dart';
-import 'package:personal_pjt/views/screens/ProfilePage.dart';
+import 'package:spotify/connector/auth_connector.dart';
+import 'package:spotify/i18n/localisation_service.dart';
+import 'package:spotify/views/screens/ProfilePage.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);

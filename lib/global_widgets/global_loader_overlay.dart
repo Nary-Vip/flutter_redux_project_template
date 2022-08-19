@@ -1,6 +1,6 @@
 // import 'package:finnobuddy_customer/global_widgets/toast_helper.dart';
 // import 'package:flutter/material.dart';
-// import 'package:personal_pjt/global_widgets/toast_helper.dart';
+// import 'package:spotify/global_widgets/toast_helper.dart';
 //
 // class GlobalErrorAlert extends StatelessWidget {
 //   const GlobalErrorAlert({Key key, this.text, this.onTap}) : super(key: key);

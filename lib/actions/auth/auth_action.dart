@@ -1,4 +1,4 @@
-import 'package:personal_pjt/models/app_user.dart';
+import 'package:spotify/models/app_user.dart';
 
 class CheckForUserInPrefs {}
 

@@ -1,7 +1,7 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
-import 'package:personal_pjt/models/search_track_items.dart';
+import 'package:spotify/models/search_track_items.dart';
 
 class MusicPlayer extends StatefulWidget {
   const MusicPlayer({Key? key, required this.item}) : super(key: key);

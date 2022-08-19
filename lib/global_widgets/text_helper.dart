@@ -1,7 +1,7 @@
-import 'package:personal_pjt/core/theme/app_colors.dart';
-import 'package:personal_pjt/core/theme/app_styles.dart';
-import 'package:personal_pjt/global_widgets/padding_helper.dart';
-import 'package:personal_pjt/global_widgets/widget_helper.dart';
+import 'package:spotify/core/theme/app_colors.dart';
+import 'package:spotify/core/theme/app_styles.dart';
+import 'package:spotify/global_widgets/padding_helper.dart';
+import 'package:spotify/global_widgets/widget_helper.dart';
 import 'package:flutter/material.dart';
 
 Widget getLoginText(String textValue) {

@@ -1,7 +1,7 @@
-import 'package:personal_pjt/connector/auth_connector.dart';
-import 'package:personal_pjt/views/home/HomeScreen.dart';
-import 'package:personal_pjt/views/loader/app_loader.dart';
-import 'package:personal_pjt/views/auth/login_page.dart';
+import 'package:spotify/connector/auth_connector.dart';
+import 'package:spotify/views/home/HomeScreen.dart';
+import 'package:spotify/views/loader/app_loader.dart';
+import 'package:spotify/views/auth/login_page.dart';
 import 'package:flutter/material.dart';
 
 class InitPage extends StatelessWidget {

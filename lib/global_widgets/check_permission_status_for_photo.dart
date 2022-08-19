@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:personal_pjt/core/theme/app_colors.dart';
-import 'package:personal_pjt/core/theme/app_styles.dart';
+import 'package:spotify/core/theme/app_colors.dart';
+import 'package:spotify/core/theme/app_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

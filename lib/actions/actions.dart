@@ -1,4 +1,4 @@
 // export all actions here
-export 'package:personal_pjt/actions/auth/auth_action.dart';
-export 'package:personal_pjt/actions/notification/notification_action.dart';
-export 'package:personal_pjt/actions/search/spotify_actions.dart';
+export 'package:spotify/actions/auth/auth_action.dart';
+export 'package:spotify/actions/notification/notification_action.dart';
+export 'package:spotify/actions/search/spotify_actions.dart';

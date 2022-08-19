@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_pjt/connector/auth_connector.dart';
+import 'package:spotify/connector/auth_connector.dart';
 
 // multiple connector example  uses auth_connector and todo_connector
 class HomePage extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:personal_pjt/core/theme/app_colors.dart';
+import 'package:spotify/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class GradientBox extends StatelessWidget {

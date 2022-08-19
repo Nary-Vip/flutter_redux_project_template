@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_pjt/data/app_repository.dart';
+import 'package:spotify/data/app_repository.dart';
 
 class AppRepositoryProvider extends InheritedWidget {
   const AppRepositoryProvider(

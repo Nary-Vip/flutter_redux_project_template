@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:personal_pjt/core/theme/app_assets.dart';
-import 'package:personal_pjt/core/theme/app_colors.dart';
-import 'package:personal_pjt/core/theme/app_styles.dart';
-import 'package:personal_pjt/global_widgets/padding_helper.dart';
-import 'package:personal_pjt/models/models.dart';
+import 'package:spotify/core/theme/app_assets.dart';
+import 'package:spotify/core/theme/app_colors.dart';
+import 'package:spotify/core/theme/app_styles.dart';
+import 'package:spotify/global_widgets/padding_helper.dart';
+import 'package:spotify/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:getwidget/getwidget.dart';
@@ -32,8 +32,7 @@ class Logger {
 
   final String tag;
 
-  static bool get isProduction =>
-      const bool.fromEnvironment('dart.vm.product');
+  static bool get isProduction => const bool.fromEnvironment('dart.vm.product');
 
   void d(String log) {
     if (isProduction) {
@@ -94,7 +93,7 @@ class Utils {
         borderRadius: BorderRadius.circular(100.0),
         child: FadeInImage.assetNetwork(
           placeholder: AppAssets.dummyPlaceholder,
-          image: url ,
+          image: url,
           fit: BoxFit.cover,
         ),
       ),
@@ -130,7 +129,7 @@ class Utils {
         borderRadius: BorderRadius.circular(10.0),
         child: FadeInImage.assetNetwork(
           placeholder: AppAssets.dummyPlaceholder,
-          image: imageURL ,
+          image: imageURL,
           fit: BoxFit.fill,
         ),
       ),

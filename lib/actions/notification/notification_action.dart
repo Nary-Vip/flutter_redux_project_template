@@ -1,5 +1,5 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:personal_pjt/models/models.dart';
+import 'package:spotify/models/models.dart';
 
 //*************************** list-notifications ******************************//
 class NotificationList {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:personal_pjt/i18n/localisation_service.dart';
+import 'package:spotify/i18n/localisation_service.dart';
 
 class PremiumPage extends StatefulWidget {
   const PremiumPage({Key? key}) : super(key: key);

@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:personal_pjt/data/api/api_client.dart';
-import 'package:personal_pjt/data/services/api_service.dart';
-import 'package:personal_pjt/models/library_album_result.dart';
-import 'package:personal_pjt/models/models.dart';
-import 'package:personal_pjt/models/search_track_result.dart';
-import 'package:personal_pjt/models/user_profile.dart';
+import 'package:spotify/data/api/api_client.dart';
+import 'package:spotify/data/services/api_service.dart';
+import 'package:spotify/models/library_album_result.dart';
+import 'package:spotify/models/models.dart';
+import 'package:spotify/models/search_track_result.dart';
+import 'package:spotify/models/user_profile.dart';
 
 class SearchService extends ApiService {
   SearchService({required ApiClient client}) : super(client: client);

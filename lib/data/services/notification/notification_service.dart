@@ -1,6 +1,6 @@
-import 'package:personal_pjt/data/api/api_client.dart';
-import 'package:personal_pjt/data/services/api_service.dart';
-import 'package:personal_pjt/models/models.dart';
+import 'package:spotify/data/api/api_client.dart';
+import 'package:spotify/data/services/api_service.dart';
+import 'package:spotify/models/models.dart';
 
 class NotificationService extends ApiService {
   NotificationService({required ApiClient client}) : super(client: client);

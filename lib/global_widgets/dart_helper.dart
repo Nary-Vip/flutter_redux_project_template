@@ -1,5 +1,5 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:personal_pjt/core/values/app_constants.dart';
+import 'package:spotify/core/values/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class DartHelper {

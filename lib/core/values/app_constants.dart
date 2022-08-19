@@ -1,5 +1,5 @@
-import 'package:personal_pjt/data/api/api_client.dart';
-import 'package:personal_pjt/data/api/api_routes.dart';
+import 'package:spotify/data/api/api_client.dart';
+import 'package:spotify/data/api/api_routes.dart';
 
 enum Env {
   test,

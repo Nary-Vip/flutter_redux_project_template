@@ -1,6 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:personal_pjt/models/search_track_external_urls.dart';
+import 'package:spotify/models/search_track_external_urls.dart';
 
 part 'search_track_artists.g.dart';
 

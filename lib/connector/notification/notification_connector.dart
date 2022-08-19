@@ -1,7 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
-import 'package:personal_pjt/actions/actions.dart';
-import 'package:personal_pjt/models/models.dart';
+import 'package:spotify/actions/actions.dart';
+import 'package:spotify/models/models.dart';
 import 'package:flutter/material.dart' hide Builder;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -43,7 +43,6 @@ abstract class NotificationModel
   NotificationListAction get notificationListAction;
 
   UpdateNotificationReadStatusAction get updateNotificationReadStatus;
-
 
   AppUser? get currentUser;
 

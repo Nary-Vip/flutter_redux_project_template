@@ -1,6 +1,6 @@
-import 'package:personal_pjt/core/theme/app_colors.dart';
+import 'package:spotify/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_pjt/connector/auth_connector.dart';
+import 'package:spotify/connector/auth_connector.dart';
 
 class LoginPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -32,8 +32,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 child: ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                      AppColors.themeColor.withOpacity(0.6),
-                      BlendMode.dstATop),
+                      AppColors.themeColor.withOpacity(0.6), BlendMode.dstATop),
                   child: Text('qkjwbc'),
                 ),
               ),

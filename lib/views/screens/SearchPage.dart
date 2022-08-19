@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:personal_pjt/connector/auth_connector.dart';
-import 'package:personal_pjt/i18n/localisation_service.dart';
-import 'package:personal_pjt/views/screens/MusicPlayer.dart';
+import 'package:spotify/connector/auth_connector.dart';
+import 'package:spotify/i18n/localisation_service.dart';
+import 'package:spotify/views/screens/MusicPlayer.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -72,7 +72,9 @@ class _SearchPageState extends State<SearchPage> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) {
-                                  return MusicPlayer(item: model.searchResults!.items![index],);
+                                  return MusicPlayer(
+                                    item: model.searchResults!.items![index],
+                                  );
                                 }));
                               },
                               child: Padding(

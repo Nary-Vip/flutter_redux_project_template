@@ -3,10 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:loading_gifs/loading_gifs.dart';
-import 'package:personal_pjt/core/theme/app_assets.dart';
-import 'package:personal_pjt/core/theme/app_colors.dart';
-import 'package:personal_pjt/core/theme/app_styles.dart';
-import 'package:personal_pjt/global_widgets/dart_helper.dart';
+import 'package:spotify/core/theme/app_assets.dart';
+import 'package:spotify/core/theme/app_colors.dart';
+import 'package:spotify/core/theme/app_styles.dart';
+import 'package:spotify/global_widgets/dart_helper.dart';
 
 Size getWidgetSize(GlobalKey key) {
   final renderBox = key.currentContext?.findRenderObject() as RenderBox;

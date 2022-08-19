@@ -1,9 +1,9 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:personal_pjt/actions/actions.dart';
-import 'package:personal_pjt/core/utils/utils.dart';
-import 'package:personal_pjt/data/app_repository.dart';
-import 'package:personal_pjt/data/services/notification/notification_service.dart';
-import 'package:personal_pjt/models/models.dart';
+import 'package:spotify/actions/actions.dart';
+import 'package:spotify/core/utils/utils.dart';
+import 'package:spotify/data/app_repository.dart';
+import 'package:spotify/data/services/notification/notification_service.dart';
+import 'package:spotify/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 

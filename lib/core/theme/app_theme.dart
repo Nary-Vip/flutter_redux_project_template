@@ -1,7 +1,7 @@
 library theme;
 
-import 'package:personal_pjt/core/theme/app_colors.dart';
-import 'package:personal_pjt/core/theme/app_styles.dart';
+import 'package:spotify/core/theme/app_colors.dart';
+import 'package:spotify/core/theme/app_styles.dart';
 import 'package:flutter/material.dart';
 
 final ThemeData themeData = ThemeData(
@@ -13,9 +13,7 @@ final ThemeData themeData = ThemeData(
       buttonColor: AppColors.themeColor,
       textTheme: ButtonTextTheme.primary,
     ),
-    sliderTheme: SliderThemeData(
-        showValueIndicator: ShowValueIndicator.always
-    ),
+    sliderTheme: SliderThemeData(showValueIndicator: ShowValueIndicator.always),
     inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.textFieldFillColor,

@@ -1,7 +1,7 @@
-// import 'package:personal_pjt/global_widgets/dart_helper.dart';
-// import 'package:personal_pjt/global_widgets/padding_helper.dart';
-// import 'package:personal_pjt/global_widgets/text_helper.dart';
-// import 'package:personal_pjt/global_widgets/widget_helper.dart';
+// import 'package:spotify/global_widgets/dart_helper.dart';
+// import 'package:spotify/global_widgets/padding_helper.dart';
+// import 'package:spotify/global_widgets/text_helper.dart';
+// import 'package:spotify/global_widgets/widget_helper.dart';
 // import 'package:flutter/material.dart';
 //
 // class AllAppBar extends StatelessWidget {

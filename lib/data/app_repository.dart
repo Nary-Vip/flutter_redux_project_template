@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:personal_pjt/data/services/auth/auth_service.dart';
-import 'package:personal_pjt/data/services/notification/notification_service.dart';
-import 'package:personal_pjt/data/services/search/search_service.dart';
-import 'package:personal_pjt/models/app_user.dart';
+import 'package:spotify/data/services/auth/auth_service.dart';
+import 'package:spotify/data/services/notification/notification_service.dart';
+import 'package:spotify/data/services/search/search_service.dart';
+import 'package:spotify/models/app_user.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_pjt/data/api/api_client.dart';
-import 'package:personal_pjt/data/app_repository_provider.dart';
-import 'package:personal_pjt/data/preference_client.dart';
-import 'package:personal_pjt/data/services/api_service.dart';
-import 'package:personal_pjt/models/models.dart';
+import 'package:spotify/data/api/api_client.dart';
+import 'package:spotify/data/app_repository_provider.dart';
+import 'package:spotify/data/preference_client.dart';
+import 'package:spotify/data/services/api_service.dart';
+import 'package:spotify/models/models.dart';
 
 class AppRepository {
   AppRepository({required this.preferencesClient, required this.config})

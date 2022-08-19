@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:personal_pjt/connector/auth_connector.dart';
-import 'package:personal_pjt/i18n/localisation_service.dart';
-import 'package:personal_pjt/views/screens/LandingPage.dart';
-import 'package:personal_pjt/views/screens/Library.dart';
-import 'package:personal_pjt/views/screens/PremiumPage.dart';
-import 'package:personal_pjt/views/screens/SearchAndGenre.dart';
+import 'package:spotify/connector/auth_connector.dart';
+import 'package:spotify/i18n/localisation_service.dart';
+import 'package:spotify/views/screens/LandingPage.dart';
+import 'package:spotify/views/screens/Library.dart';
+import 'package:spotify/views/screens/PremiumPage.dart';
+import 'package:spotify/views/screens/SearchAndGenre.dart';
 
-//import 'package:personal_pjt/i18n/localisation_service.dart';
+//import 'package:spotify/i18n/localisation_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.model}) : super(key: key);

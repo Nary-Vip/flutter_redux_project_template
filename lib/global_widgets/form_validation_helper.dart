@@ -1,5 +1,5 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:personal_pjt/global_widgets/dart_helper.dart';
+import 'package:spotify/global_widgets/dart_helper.dart';
 import 'package:flutter/material.dart';
 
 class FormValidationHelper {

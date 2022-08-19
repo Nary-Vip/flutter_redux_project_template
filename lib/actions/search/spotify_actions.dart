@@ -1,11 +1,11 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:personal_pjt/models/library_album_result.dart';
-import 'package:personal_pjt/models/playlist_model.dart';
-import 'package:personal_pjt/models/playlist_track.dart';
-import 'package:personal_pjt/models/search_track.dart';
-import 'package:personal_pjt/models/search_track_album.dart';
-import 'package:personal_pjt/models/search_track_result.dart';
-import 'package:personal_pjt/models/user_profile.dart';
+import 'package:spotify/models/library_album_result.dart';
+import 'package:spotify/models/playlist_model.dart';
+import 'package:spotify/models/playlist_track.dart';
+import 'package:spotify/models/search_track.dart';
+import 'package:spotify/models/search_track_album.dart';
+import 'package:spotify/models/search_track_result.dart';
+import 'package:spotify/models/user_profile.dart';
 
 class UserQueryAction {
   final String? userQuery;

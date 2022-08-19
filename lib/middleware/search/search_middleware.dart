@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:personal_pjt/data/app_repository.dart';
-import 'package:personal_pjt/models/library_album_result.dart';
-import 'package:personal_pjt/models/models.dart';
-import 'package:personal_pjt/models/search_track_result.dart';
-import 'package:personal_pjt/models/user_profile.dart';
+import 'package:spotify/data/app_repository.dart';
+import 'package:spotify/models/library_album_result.dart';
+import 'package:spotify/models/models.dart';
+import 'package:spotify/models/search_track_result.dart';
+import 'package:spotify/models/user_profile.dart';
 import 'package:redux/redux.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';

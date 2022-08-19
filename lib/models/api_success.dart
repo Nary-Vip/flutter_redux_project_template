@@ -1,11 +1,11 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:personal_pjt/models/models.dart';
-import 'package:personal_pjt/models/playlist_model.dart';
-import 'package:personal_pjt/models/playlist_track.dart';
-import 'package:personal_pjt/models/search_track_result.dart';
-import 'package:personal_pjt/models/user_profile.dart';
+import 'package:spotify/models/models.dart';
+import 'package:spotify/models/playlist_model.dart';
+import 'package:spotify/models/playlist_track.dart';
+import 'package:spotify/models/search_track_result.dart';
+import 'package:spotify/models/user_profile.dart';
 
 part 'api_success.g.dart';
 

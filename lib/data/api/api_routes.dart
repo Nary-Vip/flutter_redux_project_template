@@ -1,4 +1,4 @@
-import 'package:personal_pjt/data/api/api_client.dart';
+import 'package:spotify/data/api/api_client.dart';
 
 class ApiRoutes {
 //  https://jsonplaceholder.typicode.com/todos/

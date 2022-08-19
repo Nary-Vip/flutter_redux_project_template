@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:personal_pjt/models/models.dart';
+import 'package:spotify/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesClient {

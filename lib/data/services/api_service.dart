@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:built_value/serializer.dart';
 import 'package:meta/meta.dart';
-import 'package:personal_pjt/data/api/api_client.dart';
-import 'package:personal_pjt/models/serializers.dart';
+import 'package:spotify/data/api/api_client.dart';
+import 'package:spotify/models/serializers.dart';
 
 abstract class ApiService {
   const ApiService({required this.client}) : assert(client != null);

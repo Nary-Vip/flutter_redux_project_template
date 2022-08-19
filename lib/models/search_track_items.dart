@@ -1,14 +1,14 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:personal_pjt/models/album_copyright.dart';
-import 'package:personal_pjt/models/playlist_owner_model.dart';
-import 'package:personal_pjt/models/playlist_track.dart';
-import 'package:personal_pjt/models/search_track_album.dart';
-import 'package:personal_pjt/models/search_track_artists.dart';
-import 'package:personal_pjt/models/search_track_external_ids.dart';
-import 'package:personal_pjt/models/search_track_external_urls.dart';
-import 'package:personal_pjt/models/search_track_images.dart';
+import 'package:spotify/models/album_copyright.dart';
+import 'package:spotify/models/playlist_owner_model.dart';
+import 'package:spotify/models/playlist_track.dart';
+import 'package:spotify/models/search_track_album.dart';
+import 'package:spotify/models/search_track_artists.dart';
+import 'package:spotify/models/search_track_external_ids.dart';
+import 'package:spotify/models/search_track_external_urls.dart';
+import 'package:spotify/models/search_track_images.dart';
 
 part 'search_track_items.g.dart';
 

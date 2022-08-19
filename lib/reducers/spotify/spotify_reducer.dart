@@ -1,5 +1,5 @@
-import 'package:personal_pjt/actions/actions.dart';
-import 'package:personal_pjt/models/app_state.dart';
+import 'package:spotify/actions/actions.dart';
+import 'package:spotify/models/app_state.dart';
 import 'package:redux/redux.dart';
 
 Reducer<AppState> spotifyReducer = combineReducers(<Reducer<AppState>>[

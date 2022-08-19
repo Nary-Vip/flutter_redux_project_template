@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:built_collection/built_collection.dart';
-import 'package:personal_pjt/data/api/api_client.dart';
-import 'package:personal_pjt/data/services/api_service.dart';
+import 'package:spotify/data/api/api_client.dart';
+import 'package:spotify/data/services/api_service.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_pjt/models/models.dart';
-import 'package:personal_pjt/models/serializers.dart';
+import 'package:spotify/models/models.dart';
+import 'package:spotify/models/serializers.dart';
 
 class AuthService extends ApiService {
   AuthService({required ApiClient client}) : super(client: client);

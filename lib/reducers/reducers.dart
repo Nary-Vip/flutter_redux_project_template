@@ -1,7 +1,7 @@
-import 'package:personal_pjt/models/models.dart';
-import 'package:personal_pjt/reducers/auth/auth_reducer.dart';
-import 'package:personal_pjt/reducers/notification/notification_reducer.dart';
-import 'package:personal_pjt/reducers/spotify/spotify_reducer.dart';
+import 'package:spotify/models/models.dart';
+import 'package:spotify/reducers/auth/auth_reducer.dart';
+import 'package:spotify/reducers/notification/notification_reducer.dart';
+import 'package:spotify/reducers/spotify/spotify_reducer.dart';
 import 'package:redux/redux.dart';
 
 Reducer<AppState> reducer = combineReducers(

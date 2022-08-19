@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:personal_pjt/connector/auth_connector.dart';
-import 'package:personal_pjt/i18n/localisation_service.dart';
-import 'package:personal_pjt/views/screens/PremiumPage.dart';
+import 'package:spotify/connector/auth_connector.dart';
+import 'package:spotify/i18n/localisation_service.dart';
+import 'package:spotify/views/screens/PremiumPage.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({Key? key}) : super(key: key);

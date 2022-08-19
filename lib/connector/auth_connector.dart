@@ -1,12 +1,12 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:personal_pjt/actions/actions.dart';
-import 'package:personal_pjt/models/library_album_result.dart';
-import 'package:personal_pjt/models/models.dart';
+import 'package:spotify/actions/actions.dart';
+import 'package:spotify/models/library_album_result.dart';
+import 'package:spotify/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:flutter/material.dart' hide Builder;
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:personal_pjt/models/search_track_result.dart';
-import 'package:personal_pjt/models/user_profile.dart';
+import 'package:spotify/models/search_track_result.dart';
+import 'package:spotify/models/user_profile.dart';
 import 'package:redux/redux.dart';
 
 part 'auth_connector.g.dart';

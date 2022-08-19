@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:personal_pjt/core/utils/utils.dart';
-import 'package:personal_pjt/models/api_error.dart';
+import 'package:spotify/core/utils/utils.dart';
+import 'package:spotify/models/api_error.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart' as io_client;
-import 'package:personal_pjt/models/models.dart';
+import 'package:spotify/models/models.dart';
 
 enum Method {
   GET,

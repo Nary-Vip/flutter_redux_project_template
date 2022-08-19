@@ -1,11 +1,12 @@
-import 'package:personal_pjt/core/theme/app_colors.dart';
+import 'package:spotify/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 DateTime? currentBackPressTime;
 
 class AndroidBackControl extends StatelessWidget {
-  const AndroidBackControl({Key? key,required this.child,required this.onWillPop})
+  const AndroidBackControl(
+      {Key? key, required this.child, required this.onWillPop})
       : super(key: key);
   final Widget child;
   final Function onWillPop;

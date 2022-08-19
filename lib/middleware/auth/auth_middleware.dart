@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:personal_pjt/actions/actions.dart';
-import 'package:personal_pjt/data/app_repository.dart';
-import 'package:personal_pjt/data/services/api_service.dart';
-import 'package:personal_pjt/data/services/auth/auth_service.dart';
-import 'package:personal_pjt/models/models.dart';
-import 'package:personal_pjt/views/home/home_page.dart';
+import 'package:spotify/actions/actions.dart';
+import 'package:spotify/data/app_repository.dart';
+import 'package:spotify/data/services/api_service.dart';
+import 'package:spotify/data/services/auth/auth_service.dart';
+import 'package:spotify/models/models.dart';
+import 'package:spotify/views/home/home_page.dart';
 import 'package:redux/redux.dart';
 
 bool tokenAvailable = false;
