@@ -12,6 +12,7 @@ abstract class SearchTrackExternalIds
   SearchTrackExternalIds._();
 
   String? get isrc;
+  String? get upc;
 
   static Serializer<SearchTrackExternalIds> get serializer =>
       _$searchTrackExternalIdsSerializer;

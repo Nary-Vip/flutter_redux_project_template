@@ -16,6 +16,8 @@ class AuthMiddleware {
   final AppRepository repository;
   final AuthService authService;
 
+  bool isTokenExpired = false;
+
   List<Middleware<AppState>> createAuthMiddleware() {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, CheckForUserInPrefs>(checkForUserInPrefs),
@@ -30,10 +32,11 @@ class AuthMiddleware {
     try {
       store.dispatch(TriggerAuthentication());
 
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(seconds: 3), () {
         store.dispatch(FetchLatestAlbums());
         store.dispatch(FetchPlaylistAction());
         store.dispatch(FetchUserProfile());
+        store.dispatch(FetchUserSavedAlbum());
       });
       store.dispatch(SetInitializer(false));
     } catch (e) {

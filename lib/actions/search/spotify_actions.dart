@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:personal_pjt/models/library_album_result.dart';
 import 'package:personal_pjt/models/playlist_model.dart';
 import 'package:personal_pjt/models/playlist_track.dart';
 import 'package:personal_pjt/models/search_track.dart';
@@ -56,4 +57,18 @@ class SaveFetchedUserProfile {
   final UserProfile? userProfile;
 
   SaveFetchedUserProfile(this.userProfile);
+}
+
+class FetchUserSavedAlbum {}
+
+class SaveFetchedSavedAlbums {
+  final LibraryAlbumResult? userSavedAlbums;
+
+  SaveFetchedSavedAlbums(this.userSavedAlbums);
+}
+
+class DeleteSavedAlbum {
+  final String id;
+
+  DeleteSavedAlbum(this.id);
 }

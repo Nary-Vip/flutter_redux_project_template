@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:personal_pjt/data/api/api_client.dart';
 import 'package:personal_pjt/data/services/api_service.dart';
+import 'package:personal_pjt/models/library_album_result.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:personal_pjt/models/search_track_result.dart';
 import 'package:personal_pjt/models/user_profile.dart';
@@ -93,6 +94,43 @@ class SearchService extends ApiService {
         'Authorization': 'Bearer $token'
       },
       path: '/users/31nul3com6gwnuv3j7cnn4gedolu',
+    );
+    if (res.isSuccess) {
+      return res.data!;
+    } else {
+      throw res.error;
+    }
+  }
+
+  Future<LibraryAlbumResult?> fetchUserSavedAlbum(String token) async {
+    final ApiResponse<LibraryAlbumResult> res =
+        await client!.callJsonApi<LibraryAlbumResult>(
+      method: Method.GET,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+      path: '/me/albums',
+    );
+    if (res.isSuccess) {
+      return res.data!;
+    } else {
+      throw res.error;
+    }
+  }
+
+  Future<LibraryAlbumResult?> deleteSavedAlbum(String token, String id) async {
+    final ApiResponse<LibraryAlbumResult> res =
+        await client!.callJsonApi<LibraryAlbumResult>(
+      method: Method.DELETE,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+      queryParams: {"ids": "$id"},
+      path: '/me/albums',
     );
     if (res.isSuccess) {
       return res.data!;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_pjt/connector/auth_connector.dart';
 import 'package:personal_pjt/i18n/localisation_service.dart';
+import 'package:personal_pjt/views/screens/MusicPlayer.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -67,21 +68,29 @@ class _SearchPageState extends State<SearchPage> {
                         child: ListView.builder(
                           itemCount: model.searchResults!.items!.length,
                           itemBuilder: (BuildContext context, index) {
-                            return Padding(
-                              padding: EdgeInsets.all(10),
-                              child: ListTile(
-                                subtitle: Text(
-                                  "${model.searchResults!.items![index].artists![0].name}",
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                                leading: Image.network(
-                                  "${model.searchResults!.items![index].album!.images![0].url}",
-                                ),
-                                title: Text(
-                                  "${model.searchResults!.items![index].name}",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                  return MusicPlayer(item: model.searchResults!.items![index],);
+                                }));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: ListTile(
+                                  subtitle: Text(
+                                    "${model.searchResults!.items![index].artists![0].name}",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  leading: Image.network(
+                                    "${model.searchResults!.items![index].album!.images![0].url}",
+                                  ),
+                                  title: Text(
+                                    "${model.searchResults!.items![index].name}",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                             );

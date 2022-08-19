@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:personal_pjt/data/app_repository.dart';
+import 'package:personal_pjt/models/library_album_result.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:personal_pjt/models/search_track_result.dart';
 import 'package:personal_pjt/models/user_profile.dart';
 import 'package:redux/redux.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../actions/search/spotify_actions.dart';
 import '../../data/services/search/search_service.dart';
 
@@ -23,7 +25,8 @@ class SearchMiddleware {
       TypedMiddleware<AppState, FetchAvailableGenre>(fetchAvailableGenre),
       TypedMiddleware<AppState, FetchLatestAlbums>(fetchLatestAlbums),
       TypedMiddleware<AppState, FetchPlaylistAction>(fetchPlaylists),
-      TypedMiddleware<AppState, FetchUserProfile>(fetchUserProfile)
+      TypedMiddleware<AppState, FetchUserProfile>(fetchUserProfile),
+      TypedMiddleware<AppState, FetchUserSavedAlbum>(fetchUserSavedAlbum)
     ];
   }
 
@@ -48,10 +51,36 @@ class SearchMiddleware {
           await searchService.fetchPlaylist(store.state.accessToken!);
 
       store.dispatch(SaveFetchedPlaylist(response!.playlists!));
-      print(response.playlists);
-      print(store.state.saveFetchedPlaylist);
     } catch (e) {
       print(e);
+    }
+  }
+
+  void fetchUserSavedAlbum(Store<AppState> store, FetchUserSavedAlbum action,
+      NextDispatcher next) async {
+    print("Fetching User albums");
+    try {
+      String? token = dotenv.env['TEMP_LIB_TOKEN'];
+      final LibraryAlbumResult? response =
+          await searchService.fetchUserSavedAlbum(token!);
+      store.dispatch(SaveFetchedSavedAlbums(response!));
+      print("Userrrrr album ${store.state.userSavedAlbums}");
+    } catch (e) {
+      print("Errorr $e");
+    }
+  }
+
+  void deleteSavedAlbum(Store<AppState> store, DeleteSavedAlbum action,
+      NextDispatcher next) async {
+    print("Fetching User albums");
+    try {
+      String? token = dotenv.env['TEMP_LIB_TOKEN'];
+      final LibraryAlbumResult? response =
+          await searchService.fetchUserSavedAlbum(token!);
+      store.dispatch(SaveFetchedSavedAlbums(response!));
+      print("Userrrrr album ${store.state.userSavedAlbums}");
+    } catch (e) {
+      print("Errorr $e");
     }
   }
 
@@ -63,8 +92,6 @@ class SearchMiddleware {
           await searchService.fetchUserProfile(store.state.accessToken!);
 
       store.dispatch(SaveFetchedUserProfile(response!));
-
-      print("Userrr profile ${store.state.userProfile}");
     } catch (e) {
       print("errorrr $e");
     }
@@ -86,7 +113,6 @@ class SearchMiddleware {
   void userQueryAction(Store<AppState> store, UserQueryAction action,
       NextDispatcher next) async {
     try {
-      print("Action nnnnnn ${action.userQuery}");
       final SearchModelBuilder obj = SearchModel().toBuilder();
       obj
         ..limit = 20
@@ -107,7 +133,7 @@ class SearchMiddleware {
   //Authentication
   void triggerAuthentication(Store<AppState> store,
       TriggerAuthentication action, NextDispatcher next) async {
-    print("TOken comming");
+    final prefs = await SharedPreferences.getInstance();
     try {
       String? id = dotenv.env['CLIENT_ID'];
       String? secret = dotenv.env['CLIENT_SECRET'];
@@ -129,8 +155,9 @@ class SearchMiddleware {
       );
 
       var parsedJson = json.decode(response.body);
-      print(parsedJson);
       store.dispatch(Authentication(parsedJson['access_token']));
+      print(parsedJson["access_token"]);
+      await prefs.setString('SpotifyToken', parsedJson['access_token']);
     } catch (e) {
       print(e);
     }

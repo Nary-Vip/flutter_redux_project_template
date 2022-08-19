@@ -2,6 +2,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:personal_pjt/models/album_copyright.dart';
+import 'package:personal_pjt/models/library_album_result.dart';
+import 'package:personal_pjt/models/library_item.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:personal_pjt/models/playlist_model.dart';
 import 'package:personal_pjt/models/playlist_owner_model.dart';
@@ -35,12 +37,15 @@ part 'serializers.g.dart';
   SearchTrackImages,
   SearchTrackItem,
   SearchTrackResult,
+  SearchModel,
   PlayListModel,
   PlaylistTrack,
   PlaylistOwner,
   UserProfile,
   UserFollowers,
-  AlbumCopyright
+  AlbumCopyright,
+  LibraryAlbumResult,
+  LibraryItem,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(new StandardJsonPlugin())).build();

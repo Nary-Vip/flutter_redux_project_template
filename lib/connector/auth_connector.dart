@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:personal_pjt/actions/actions.dart';
+import 'package:personal_pjt/models/library_album_result.dart';
 import 'package:personal_pjt/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:flutter/material.dart' hide Builder;
@@ -57,6 +58,7 @@ abstract class AuthViewModel
           store.dispatch(FetchUserProfile());
         }
         ..userProfile = store.state.userProfile?.toBuilder()
+        ..userSavedAlbums = store.state.userSavedAlbums?.toBuilder()
         ..saveFetchedPlaylist = store.state.saveFetchedPlaylist?.toBuilder()
         ..genreList = store.state.genreList?.toBuilder()
         ..searchResults = store.state.searchResults?.toBuilder()
@@ -76,6 +78,8 @@ abstract class AuthViewModel
   LogOutAction get logOut;
 
   AppUser? get currentUser;
+
+  LibraryAlbumResult? get userSavedAlbums;
 
   AuthenticationConnector? get authentication;
 

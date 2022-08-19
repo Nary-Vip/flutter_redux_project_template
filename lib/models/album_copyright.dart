@@ -13,8 +13,11 @@ abstract class AlbumCopyright
 
   AlbumCopyright._();
 
+  @BuiltValueField(wireName: 'added_at')
   String? get addedAt;
   SearchTrackItem? get album;
+  String? get text;
+  String? get type;
 
   static Serializer<AlbumCopyright> get serializer =>
       _$albumCopyrightSerializer;

@@ -9,6 +9,7 @@ Reducer<AppState> spotifyReducer = combineReducers(<Reducer<AppState>>[
   TypedReducer<AppState, SaveFetchedLatestAlbums>(saveLatestAlbum),
   TypedReducer<AppState, SaveFetchedPlaylist>(saveFetchedPlaylist),
   TypedReducer<AppState, SaveFetchedUserProfile>(saveFetchedUserProfile),
+  TypedReducer<AppState, SaveFetchedSavedAlbums>(saveFetchedSavedAlbums),
 ]);
 
 AppState accessToken(AppState state, Authentication action) {
@@ -44,5 +45,11 @@ AppState saveFetchedPlaylist(AppState state, SaveFetchedPlaylist action) {
 AppState saveFetchedUserProfile(AppState state, SaveFetchedUserProfile action) {
   final AppStateBuilder b = state.toBuilder();
   b..userProfile = action.userProfile!.toBuilder();
+  return b.build();
+}
+
+AppState saveFetchedSavedAlbums(AppState state, SaveFetchedSavedAlbums action) {
+  final AppStateBuilder b = state.toBuilder();
+  b..userSavedAlbums = action.userSavedAlbums!.toBuilder();
   return b.build();
 }

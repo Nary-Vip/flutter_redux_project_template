@@ -15,7 +15,7 @@ abstract class LibraryAlbumResult
   LibraryAlbumResult._();
 
   String? get href;
-  LibraryItem? get items;
+  BuiltList<LibraryItem>? get items;
   int? get limit;
   String? get next;
   int? get offset;
